@@ -1,10 +1,38 @@
+# AI Code Agent: PRD Implementation Prompt
+
 You are an expert full-stack developer tasked with building a complete application based on a Product Requirements Document (PRD). Your goal is to create a production-ready application following best practices and the specified tech stack.
 
 ## 📋 Project Setup
 
+### Project Structure
+The application will be created inside a nested folder structure:
+```
+/current-directory
+  /PRD.md (this file)
+  /project-name (main application folder - will be created)
+    /app
+    /components
+    /lib
+    ... (all Next.js app files)
+  /docs (documentation folder - will be created at root)
+    /PHASES.md
+    /TASKS.md
+    /PROGRESS.md
+  /CLAUDE.md (control file - will be created at root)
+```
+
+**Important**: 
+- The actual application code goes inside `/project-name` folder
+- Documentation files (`/docs`, `CLAUDE.md`) stay at the root level alongside `PRD.md`
+- This keeps documentation separate from application code
+
+### Setup Steps
 1. **Read the PRD**: First, read and analyze the `PRD.md` file in the current directory
-2. **Understand Requirements**: Break down all features, user stories, and technical requirements
-3. **Plan Implementation**: Create a phased development plan with clear milestones
+2. **Create Project Folder**: Create `/project-name` folder (name based on PRD project name, lowercase, hyphenated)
+3. **Initialize Application**: Run `npx create-next-app@latest project-name` with TypeScript, Tailwind, App Router
+4. **Create Documentation**: Create `/docs` folder and `/CLAUDE.md` at root level (not inside project folder)
+5. **Understand Requirements**: Break down all features, user stories, and technical requirements
+6. **Plan Implementation**: Create a phased development plan with clear milestones
 
 ## 🛠️ Tech Stack
 
@@ -137,39 +165,40 @@ This is your command interface. Always read this file before responding:
 ## 📂 Current Directory Structure
 
 ```
-/project-root
-├── /app
-│   ├── /api
-│   ├── /(auth)
-│   ├── /(dashboard)
-│   ├── layout.tsx
-│   └── page.tsx
-├── /components
-│   ├── /ui
-│   ├── /shared
-│   └── /features
-├── /lib
-│   ├── /db
-│   ├── /auth
-│   └── /utils
-├── /hooks
-├── /types
+/root-directory
+├── PRD.md
+├── CLAUDE.md
 ├── /docs
 │   ├── PHASES.md
 │   ├── TASKS.md
 │   └── PROGRESS.md
-├── /public
-├── .env.local
-├── CLAUDE.md
-├── PRD.md
-├── package.json
-└── [other config files]
+└── /project-name (main application)
+    ├── /app
+    │   ├── /api
+    │   ├── /(auth)
+    │   ├── /(dashboard)
+    │   ├── layout.tsx
+    │   └── page.tsx
+    ├── /components
+    │   ├── /ui
+    │   ├── /shared
+    │   └── /features
+    ├── /lib
+    │   ├── /db
+    │   ├── /auth
+    │   └── /utils
+    ├── /hooks
+    ├── /types
+    ├── /public
+    ├── .env.local
+    ├── package.json
+    └── [other config files]
 ```
 
 **Recently Created/Modified Files**:
-- [Timestamp]: Created `/lib/auth/config.ts`
-- [Timestamp]: Modified `/app/layout.tsx`
-- [Timestamp]: Created `/components/features/LoginForm.tsx`
+- [Timestamp]: Created `/project-name/lib/auth/config.ts`
+- [Timestamp]: Modified `/project-name/app/layout.tsx`
+- [Timestamp]: Created `/project-name/components/features/LoginForm.tsx`
 
 ---
 
@@ -275,11 +304,15 @@ Currently working on:
 
 ### Initial Setup (First Interaction)
 1. Read and analyze `PRD.md`
-2. Create `/docs/PHASES.md` with complete phase breakdown
-3. Create `/docs/TASKS.md` with all tasks for Phase 1
-4. Create `/docs/PROGRESS.md` with initial status
-5. Create `/CLAUDE.md` with current status set to Phase 1, Task 1.1
-6. Ask user: "Documentation created. Ready to start Phase 1? Type 'next' to begin."
+2. Determine project name from PRD (convert to lowercase, hyphenated format)
+3. Create `/project-name` folder for the application
+4. Initialize Next.js app inside `/project-name` with proper configuration
+5. Create `/docs` folder at root level (not inside project folder)
+6. Create `/docs/PHASES.md` with complete phase breakdown
+7. Create `/docs/TASKS.md` with all tasks for Phase 1
+8. Create `/docs/PROGRESS.md` with initial status
+9. Create `/CLAUDE.md` at root level with current status set to Phase 1, Task 1.1
+10. Ask user: "Project structure created. Documentation ready. Type 'next' to begin Phase 1."
 
 ### Ongoing Workflow
 **BEFORE EVERY RESPONSE:**
@@ -344,24 +377,34 @@ When user types **"update docs"**:
 
 ### File Organization
 ```
-/app                 # Next.js app directory
-  /api              # API routes
-  /(auth)           # Auth-related pages
-  /(dashboard)      # Protected pages
-  /layout.tsx       # Root layout
-  /page.tsx         # Home page
-/components
-  /ui               # shadcn/ui components
-  /shared           # Reusable components
-  /features         # Feature-specific components
-/lib
-  /db               # Supabase client
-  /auth             # Better Auth config
-  /utils            # Utility functions
-/hooks              # Custom React hooks
-/types              # TypeScript types
-/docs               # Documentation files
-/public             # Static assets
+/root-directory
+  PRD.md                    # Product Requirements Document
+  CLAUDE.md                 # Control file (root level)
+  /docs                     # Documentation folder (root level)
+    PHASES.md
+    TASKS.md
+    PROGRESS.md
+  /project-name             # Main application folder
+    /app                    # Next.js app directory
+      /api                  # API routes
+      /(auth)               # Auth-related pages
+      /(dashboard)          # Protected pages
+      /layout.tsx           # Root layout
+      /page.tsx             # Home page
+    /components
+      /ui                   # shadcn/ui components
+      /shared               # Reusable components
+      /features             # Feature-specific components
+    /lib
+      /db                   # Supabase client
+      /auth                 # Better Auth config
+      /utils                # Utility functions
+    /hooks                  # Custom React hooks
+    /types                  # TypeScript types
+    /public                 # Static assets
+    package.json
+    next.config.js
+    .env.local
 ```
 
 ## 🎯 Success Criteria
