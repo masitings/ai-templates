@@ -1,0 +1,10 @@
+*
+!.gitignore
+!./claude
+!.claude/*.json
+!PROMPT.md
+!README.MD
+!docs/
+!docs/extra/
+!docs/.gitkeep
+!docs/extra/.gitkeep
