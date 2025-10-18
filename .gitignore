@@ -1,7 +1,7 @@
 *
 !.gitignore
-!./claude
-!.claude/*.json
+!/.claude/
+!/.claude/*.json
 !PROMPT.md
 !README.MD
 !docs/
