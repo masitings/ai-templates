@@ -103,9 +103,73 @@ This is your command interface. Always read this file before responding:
 ```markdown
 # Claude Control File
 
+**Last Updated**: [Date and Time]
 **Current Command**: [COMMAND]
 **Current Phase**: Phase X
 **Current Task**: Task X.X
+
+---
+
+## 📦 Project Information
+
+### Project Name
+[Project Name from PRD]
+
+### Description
+[Brief description from PRD]
+
+### Tech Stack
+- **Framework**: Next.js (App Router)
+- **Database**: Supabase
+- **Authentication**: Better Auth
+- **UI Components**: shadcn/ui
+- **Styling**: Tailwind CSS
+- **Language**: TypeScript
+- **Additional Libraries**: [List any other dependencies installed]
+
+### Environment Setup
+- **Node Version**: [Version]
+- **Package Manager**: [npm/pnpm/yarn]
+- **Database**: [Supabase project URL/ID]
+
+---
+
+## 📂 Current Directory Structure
+
+```
+/project-root
+├── /app
+│   ├── /api
+│   ├── /(auth)
+│   ├── /(dashboard)
+│   ├── layout.tsx
+│   └── page.tsx
+├── /components
+│   ├── /ui
+│   ├── /shared
+│   └── /features
+├── /lib
+│   ├── /db
+│   ├── /auth
+│   └── /utils
+├── /hooks
+├── /types
+├── /docs
+│   ├── PHASES.md
+│   ├── TASKS.md
+│   └── PROGRESS.md
+├── /public
+├── .env.local
+├── CLAUDE.md
+├── PRD.md
+├── package.json
+└── [other config files]
+```
+
+**Recently Created/Modified Files**:
+- [Timestamp]: Created `/lib/auth/config.ts`
+- [Timestamp]: Modified `/app/layout.tsx`
+- [Timestamp]: Created `/components/features/LoginForm.tsx`
 
 ---
 
@@ -122,6 +186,7 @@ User will type one of these keywords to control the workflow:
 - **"status"** - Show current progress and what's next
 - **"restart [phase]"** - Go back to a specific phase
 - **"skip"** - Skip current task and move to next
+- **"list files"** - Show current directory structure and recent changes
 
 ---
 
@@ -131,6 +196,15 @@ User will type one of these keywords to control the workflow:
 **Task**: [Current task number and name]
 **Progress**: [X%]
 **Last Action**: [What was just completed]
+
+### Active Files
+Currently working on:
+- `[file path 1]` - [What's being implemented]
+- `[file path 2]` - [What's being implemented]
+
+### Completed This Session
+- ✅ [File/Feature completed]
+- ✅ [File/Feature completed]
 
 ---
 
@@ -142,11 +216,59 @@ User will type one of these keywords to control the workflow:
 
 ---
 
+## 🔧 Dependencies Installed
+
+### Core Dependencies
+- `next`: [version]
+- `react`: [version]
+- `typescript`: [version]
+- `@supabase/supabase-js`: [version]
+- `better-auth`: [version]
+- `tailwindcss`: [version]
+
+### UI & Styling
+- `@radix-ui/*`: [versions of shadcn components]
+- `lucide-react`: [version]
+- `class-variance-authority`: [version]
+- `clsx`: [version]
+- `tailwind-merge`: [version]
+
+### Dev Dependencies
+- `@types/node`: [version]
+- `@types/react`: [version]
+- `eslint`: [version]
+- `prettier`: [version]
+
+**Last Dependency Added**: [Timestamp] - [Package name and reason]
+
+---
+
 ## 📝 Command History
 
 - [Timestamp]: User said "next" - Moved to Task 2.1
 - [Timestamp]: User said "fix login bug" - Fixed authentication redirect issue
 - [Timestamp]: User said "next" - Completed Phase 1, started Phase 2
+- [Timestamp]: User said "status" - Provided progress report
+- [Timestamp]: User said "update docs" - Refreshed all documentation files
+
+---
+
+## 🐛 Known Issues / Blockers
+
+### Current Issues
+- [ ] [Issue description if any]
+
+### Resolved Issues
+- ✅ [Issue] - Fixed by [solution]
+
+---
+
+## 💡 Notes & Decisions
+
+- [Important architectural decisions]
+- [API design choices]
+- [Database schema considerations]
+- [Any deviations from original PRD and why]
 ```
 
 ## 🔄 Workflow
