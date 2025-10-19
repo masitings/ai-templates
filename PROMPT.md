@@ -308,6 +308,7 @@ This is your command interface. Always read this file before responding:
 |---------|-------------|
 | `next` | Continue to next task/phase |
 | `continue` | Resume current task if interrupted |
+| `automate` | Run ALL tasks sequentially until project completion (hands-free mode) |
 | `pause` | Stop and wait for instructions |
 | `review` | Review implementation and suggest improvements |
 | `fix [issue]` | Address specific bug or issue |
@@ -316,6 +317,14 @@ This is your command interface. Always read this file before responding:
 | `restart [phase]` | Go back to specific phase |
 | `skip` | Skip current task, move to next |
 | `list files` | Show directory structure and recent changes |
+
+**Special Command - `automate`**: 
+- Runs the entire project from start to finish automatically
+- Completes all phases and tasks sequentially
+- Only stops for critical errors or user intervention
+- Updates all documentation after each task
+- Runs tests at end of each phase
+- User can type `pause` at any time to stop automation
 
 ---
 
@@ -497,7 +506,10 @@ This is your command interface. Always read this file before responding:
 
 **BEFORE STARTING ANY TASK:**
 1. Read the task definition in `/docs/TASKS.md`
-2. Check all **Prerequisites** are completed
+2. **Check all Prerequisites are completed**:
+   - Verify each prerequisite is marked as done
+   - Do not proceed if any prerequisite is incomplete
+   - Document prerequisite check in log file
 3. Check **Dependencies** (other tasks that must be done first)
 4. Read previous log file `/docs/logs/task-X-X.md` if it exists
 5. Verify environment and setup requirements
@@ -528,6 +540,16 @@ This is your command interface. Always read this file before responding:
    - Use Supabase client for auth operations
    - Never implement custom auth logic
 
+5. **Database Seeding (CRITICAL)**:
+   - **ALWAYS create admin seeder** in initial database setup tasks
+   - Create file: `/project-name/supabase/seed.sql` or seeder script
+   - Admin seeder must include:
+     - Default admin user credentials
+     - Admin role/permissions
+     - Document credentials in `/docs/extra/ADMIN_CREDENTIALS.md`
+   - Run seeder after migrations
+   - Verify admin user can login
+
 **AFTER COMPLETING ANY TASK, SUBTASK, OR SIGNIFICANT MILESTONE:**
 
 You MUST update documentation in this exact order:
@@ -539,7 +561,21 @@ You MUST update documentation in this exact order:
    - Document linting results in log file
    - **NEVER proceed to next step if linting fails**
 
-2. **Create/Update Log File** `/docs/logs/task-X-X.md`:
+2. **Verify All Acceptance Criteria Met**:
+   - Review ALL acceptance criteria from `/docs/TASKS.md`
+   - Check off each criterion that is completed
+   - If any criterion is not met: Complete it before proceeding
+   - Document verification in log file
+   - **NEVER mark task complete if acceptance criteria not fully met**
+
+3. **Verify All Prerequisites for Next Task**:
+   - Read next task from `/docs/TASKS.md`
+   - Check all prerequisites listed for next task
+   - Verify each prerequisite is completed
+   - If current task is a prerequisite for future tasks, mark it clearly
+   - Document prerequisite status in log file
+
+4. **Create/Update Log File** `/docs/logs/task-X-X.md`:
    ```markdown
    # Task X.X Log - [Task Name]
    
@@ -584,6 +620,17 @@ You MUST update documentation in this exact order:
    ## Linting
    - `npm run lint`: ✅ Passed | ❌ Failed (Fixed: [what was fixed])
    - Lint errors fixed: [List if any]
+   
+   ## Acceptance Criteria Verification
+   - [ ] Criterion 1: ✅ Met | ❌ Not Met - [Details]
+   - [ ] Criterion 2: ✅ Met | ❌ Not Met - [Details]
+   - [ ] Criterion 3: ✅ Met | ❌ Not Met - [Details]
+   - **All criteria met**: ✅ Yes | ❌ No (if No, explain why task is still incomplete)
+   
+   ## Prerequisites Verification (for next task)
+   - [ ] Prerequisite 1: ✅ Done | ❌ Not Done
+   - [ ] Prerequisite 2: ✅ Done | ❌ Not Done
+   - **Ready for next task**: ✅ Yes | ⚠️ Partially | ❌ No
    
    ## Issues Encountered
    - [Issue 1 and how it was resolved]
@@ -630,7 +677,9 @@ You MUST update documentation in this exact order:
    - Add reference to log file
    - Check off all acceptance criteria
 
-5. **Update `/docs/PHASES.md`** (if phase completed):
+5. **Update `/docs/PHASES.md`**:
+   - Update task completion count for current phase
+   - If ALL tasks in phase are completed:
    - Mark phase deliverables as complete
    - Update phase status
    - Add completion timestamp
@@ -690,6 +739,34 @@ When a phase is completed, BEFORE moving to next phase:
 - This ensures progress is always tracked and recoverable across sessions
 
 ### Command Handling
+
+When user types **"automate"**:
+- Enter **AUTOMATION MODE** - run all tasks sequentially without user intervention
+- Show: "🤖 AUTOMATION MODE ACTIVATED - Running all phases and tasks automatically. Type 'pause' to stop."
+- For each task:
+  - Check prerequisites and acceptance criteria
+  - Complete the task fully
+  - Run linting and fix errors
+  - Create database seeders when needed (especially admin seeder)
+  - Update all documentation (PROGRESS.md, TASKS.md, PHASES.md, logs, CLAUDE.md)
+  - Verify task completion
+  - Automatically move to next task
+- At end of each phase:
+  - Create and run Playwright tests
+  - Document test results
+  - Only proceed to next phase if all tests pass
+- Continue until:
+  - All phases and tasks are completed, OR
+  - User types "pause", OR
+  - Critical error encountered
+- Show progress updates after each task: "✅ Task X.X complete | Phase X: Y/Z tasks | Overall: XX%"
+- When complete or paused, show final status summary
+
+When user types **"pause"** (during automation):
+- Stop automation immediately
+- Save current state to CLAUDE.md
+- Update all documentation with current progress
+- Show: "⏸️ Automation paused at Task X.X. Type 'automate' to resume or 'next' to continue manually."
 
 When user types **"next"**:
 - **First**: Check if current task is complete and all prerequisites for next task are met
