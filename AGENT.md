@@ -10,7 +10,7 @@ The application will be created inside a nested folder structure:
 /current-directory
   /PRD.md (this file)
   /PROMPT.md (this instruction file)
-  /project-name (main application folder - will be created)
+  /project (main application folder - ALWAYS named "project")
     /app
     /components
     /lib
@@ -45,15 +45,15 @@ The application will be created inside a nested folder structure:
 - **Core tracking docs** (PHASES.md, TASKS.md, PROGRESS.md) stay in `/docs`
 - **Execution logs** (phase-X.md, task-X-X.md) go in `/docs/logs`
 - **Additional markdown docs** (API.md, DEPLOYMENT.md, etc.) go in `/docs/extra`
-- **Non-markdown files** (diagrams, images, JSON schemas, CSV exports, etc.) go inside `/project-name/docs`
-- The actual application code goes inside `/project-name` folder
+- **Non-markdown files** (diagrams, images, JSON schemas, CSV exports, etc.) go inside `/project/docs`
+- **The actual application code goes inside `/project` folder** (ALWAYS named "project", NOT dynamic)
 - `/CLAUDE.md` stays at the root level alongside `PRD.md`
 - This keeps documentation organized: markdown at root level, non-markdown inside the project
 
 ### Setup Steps
 1. **Read the PRD**: First, read and analyze the `PRD.md` file in the current directory
-2. **Create Project Folder**: Create `/project-name` folder (name based on PRD project name, lowercase, hyphenated)
-3. **Initialize Application**: Run `npx create-next-app@latest project-name` with TypeScript, Tailwind, App Router
+2. **Create Project Folder**: Create `/project` folder (ALWAYS use "project" as folder name)
+3. **Initialize Application**: Run `npx create-next-app@latest project` with TypeScript, Tailwind, App Router
 4. **Create Documentation**: Create `/docs` folder and `/CLAUDE.md` at root level (not inside project folder)
 5. **Create Subfolders**: Create `/docs/extra` and `/docs/logs` folders
 6. **Understand Requirements**: Break down all features, user stories, and technical requirements
@@ -236,7 +236,7 @@ This is your command interface. Always read this file before responding:
 ## 📂 Directory Structure
 
 ### 🎯 Working Directory
-**Current Location**: `/project-name/`  
+**Current Location**: `/project/`  
 **All code changes happen inside this folder**
 
 ```
@@ -259,7 +259,7 @@ This is your command interface. Always read this file before responding:
 │       ├── API.md
 │       ├── DEPLOYMENT.md
 │       └── ARCHITECTURE.md
-└── /project-name/            [WORK HERE - All code]
+└── /project/                 [WORK HERE - All code]
     ├── /app/                 [CREATE/MODIFY - Next.js pages & API]
     ├── /components/          [CREATE/MODIFY - React components]
     ├── /lib/                 [CREATE/MODIFY - Utilities]
@@ -276,7 +276,7 @@ This is your command interface. Always read this file before responding:
 
 | Folder | Action | Purpose |
 |--------|--------|---------|
-| `/project-name/` | **WORK HERE** | All application code goes in this folder |
+| `/project/` | **WORK HERE** | All application code goes in this folder |
 | `/docs/` | **UPDATE** | Update markdown documentation files |
 | `/docs/logs/` | **CREATE/UPDATE** | Log files for each task and phase execution |
 | `CLAUDE.md` | **UPDATE** | Update after every task completion |
@@ -285,17 +285,17 @@ This is your command interface. Always read this file before responding:
 
 ### 📝 Recently Created/Modified
 
-**⚠️ IMPORTANT**: All application files are inside `/project-name/` folder
+**⚠️ IMPORTANT**: All application files are inside `/project/` folder
 
 | Timestamp | Type | File Path | Description |
 |-----------|------|-----------|-------------|
-| [YYYY-MM-DD HH:MM:SS] | Created | `/project-name/lib/supabase/client.ts` | Supabase client configuration |
-| [YYYY-MM-DD HH:MM:SS] | Modified | `/project-name/app/layout.tsx` | Added auth provider |
+| [YYYY-MM-DD HH:MM:SS] | Created | `/project/lib/supabase/client.ts` | Supabase client configuration |
+| [YYYY-MM-DD HH:MM:SS] | Modified | `/project/app/layout.tsx` | Added auth provider |
 | [YYYY-MM-DD HH:MM:SS] | Created | `/docs/extra/API.md` | API documentation |
 | [YYYY-MM-DD HH:MM:SS] | Created | `/docs/logs/task-1-1.md` | Task 1.1 execution log |
 
 **Remember**: 
-- Code files → `/project-name/[path]`
+- Code files → `/project/[path]`
 - Markdown docs → `/docs/` or `/docs/extra/`
 - Execution logs → `/docs/logs/task-X-X.md` or `/docs/logs/phase-X.md`
 - Always use full paths from root directory
@@ -479,17 +479,16 @@ This is your command interface. Always read this file before responding:
 
 ### Initial Setup (First Interaction)
 1. Read and analyze `PRD.md`
-2. Determine project name from PRD (convert to lowercase, hyphenated format)
-3. Create `/project-name` folder for the application
-4. Initialize Next.js app inside `/project-name` with proper configuration
-5. Create `/docs` folder at root level (not inside project folder)
-6. Create `/docs/extra` folder for additional documentation
-7. Create `/docs/logs` folder for execution logs
-8. Create `/docs/PHASES.md` with complete phase breakdown (include runnable checkpoints)
-9. Create `/docs/TASKS.md` with all tasks for Phase 1 (include prerequisites and runnable status)
-10. Create `/docs/PROGRESS.md` with initial status
-11. Create `/CLAUDE.md` at root level with current status set to Phase 1, Task 1.1
-12. Ask user: "Project structure created. Documentation ready. Type 'next' to begin Phase 1."
+2. Create `/project` folder for the application (ALWAYS use "project" as folder name)
+3. Initialize Next.js app inside `/project` with proper configuration
+4. Create `/docs` folder at root level (not inside project folder)
+5. Create `/docs/extra` folder for additional documentation
+6. Create `/docs/logs` folder for execution logs
+7. Create `/docs/PHASES.md` with complete phase breakdown (include runnable checkpoints)
+8. Create `/docs/TASKS.md` with all tasks for Phase 1 (include prerequisites and runnable status)
+9. Create `/docs/PROGRESS.md` with initial status
+10. Create `/CLAUDE.md` at root level with current status set to Phase 1, Task 1.1
+11. Ask user: "Project structure created. Documentation ready. Type 'next' to begin Phase 1."
 
 ### Ongoing Workflow
 
@@ -597,19 +596,19 @@ You MUST update documentation in this exact order:
    - [Action 2]
    
    ## Files Created/Modified
-   - `/project-name/path/to/file.ts` - [Description of changes]
-   - `/project-name/path/to/another.tsx` - [Description of changes]
+   - `/project/path/to/file.ts` - [Description of changes]
+   - `/project/path/to/another.tsx` - [Description of changes]
    - `/docs/extra/SOMETHING.md` - [Description]
    
    ## Packages Installed
    - `package-name@version` - [Why it was needed]
    
    ## Components Created
-   - `ComponentName` at `/project-name/components/...` - [Purpose]
+   - `ComponentName` at `/project/components/...` - [Purpose]
    - Used existing: `ExistingComponent` - [Verified exists before use]
    
    ## Schema Validation
-   - Form fields validated against: `/project-name/supabase/migrations/XXXX_migration.sql`
+   - Form fields validated against: `/project/supabase/migrations/XXXX_migration.sql`
    - API endpoints validated against schema: ✅ Yes | ❌ No
    - TypeScript types match database: ✅ Yes | ❌ No
    
@@ -735,6 +734,10 @@ When a phase is completed, BEFORE moving to next phase:
 - **NEVER** move to the next task without updating ALL documentation files first
 - **NEVER** complete a task with linting errors
 - **NEVER** complete a phase without full Playwright testing
+- **NEVER** skip log file creation (task logs, phase logs, testing logs are MANDATORY)
+- **ALWAYS** create `/docs/logs/task-X-X.md` after completing each task
+- **ALWAYS** create `/docs/logs/phase-X.md` after completing each phase
+- **ALWAYS** create `/docs/logs/phase-X-testing.md` after running phase tests
 - **ALWAYS** verify component/package existence before use
 - **ALWAYS** validate forms/APIs against database schema
 - **ALWAYS** create/update log files for every task completion
@@ -747,6 +750,7 @@ When a phase is completed, BEFORE moving to next phase:
 - **ALWAYS** update `/CLAUDE.md` last (it's the source of truth for current state)
 - **ALWAYS** run single `npm run dev` for both API and Frontend
 - This ensures progress is always tracked and recoverable across sessions
+- **In automation mode**: Log creation is MANDATORY and cannot be skipped
 
 ### Command Handling
 
@@ -758,19 +762,30 @@ When user types **"automate"**:
   - Complete the task fully
   - Run linting and fix errors
   - Create database seeders when needed (especially admin seeder)
-  - Update all documentation (PROGRESS.md, TASKS.md, PHASES.md, logs, CLAUDE.md)
+  - **MANDATORY: Create task log file** `/docs/logs/task-X-X.md` with complete details
+  - Update all documentation (PROGRESS.md, TASKS.md, PHASES.md, CLAUDE.md)
   - Verify task completion
   - Automatically move to next task
+  - Show: "✅ Task X.X complete | Log: /docs/logs/task-X-X.md | Phase X: Y/Z tasks | Overall: XX%"
 - At end of each phase:
   - Create and run Playwright tests
+  - **MANDATORY: Create phase log file** `/docs/logs/phase-X.md` with phase summary
+  - **MANDATORY: Create testing log file** `/docs/logs/phase-X-testing.md` with test results
   - Document test results
   - Only proceed to next phase if all tests pass
+  - Show: "✅ Phase X complete | Logs: phase-X.md, phase-X-testing.md | Tests: X/X passing"
 - Continue until:
   - All phases and tasks are completed, OR
   - User types "pause", OR
   - Critical error encountered
 - Show progress updates after each task: "✅ Task X.X complete | Phase X: Y/Z tasks | Overall: XX%"
-- When complete or paused, show final status summary
+- When complete or paused, show final status summary with all log files created
+
+**CRITICAL in Automation Mode:**
+- **NEVER skip log file creation** - every task MUST have a log file
+- **NEVER skip phase log creation** - every completed phase MUST have a log file
+- **NEVER skip testing log creation** - every phase test MUST have a testing log file
+- All logs must be created even in automation mode
 
 When user types **"pause"** (during automation):
 - Stop automation immediately
