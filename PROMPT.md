@@ -9,10 +9,13 @@ The application will be created inside a nested folder structure:
 ```
 /current-directory
   /PRD.md (this file)
+  /PROMPT.md (this instruction file)
   /project-name (main application folder - will be created)
     /app
     /components
     /lib
+    /supabase
+    /tests
     /docs (non-.md documentation files)
       /diagrams
       /assets
@@ -22,6 +25,13 @@ The application will be created inside a nested folder structure:
     /PHASES.md
     /TASKS.md
     /PROGRESS.md
+    /logs (execution logs - will be created)
+      /phase-1.md
+      /phase-2.md
+      /phase-1-testing.md
+      /task-1-1.md
+      /task-1-2.md
+      ... (logs for each phase and task)
     /extra (additional .md documentation)
       /API.md
       /DEPLOYMENT.md
@@ -33,6 +43,7 @@ The application will be created inside a nested folder structure:
 **Important File Organization Rules**: 
 - **Root `/docs` folder**: ONLY `.md` (Markdown) files are stored here
 - **Core tracking docs** (PHASES.md, TASKS.md, PROGRESS.md) stay in `/docs`
+- **Execution logs** (phase-X.md, task-X-X.md) go in `/docs/logs`
 - **Additional markdown docs** (API.md, DEPLOYMENT.md, etc.) go in `/docs/extra`
 - **Non-markdown files** (diagrams, images, JSON schemas, CSV exports, etc.) go inside `/project-name/docs`
 - The actual application code goes inside `/project-name` folder
@@ -44,19 +55,30 @@ The application will be created inside a nested folder structure:
 2. **Create Project Folder**: Create `/project-name` folder (name based on PRD project name, lowercase, hyphenated)
 3. **Initialize Application**: Run `npx create-next-app@latest project-name` with TypeScript, Tailwind, App Router
 4. **Create Documentation**: Create `/docs` folder and `/CLAUDE.md` at root level (not inside project folder)
-5. **Understand Requirements**: Break down all features, user stories, and technical requirements
-6. **Plan Implementation**: Create a phased development plan with clear milestones
+5. **Create Subfolders**: Create `/docs/extra` and `/docs/logs` folders
+6. **Understand Requirements**: Break down all features, user stories, and technical requirements
+7. **Plan Implementation**: Create a phased development plan with clear milestones
 
 ## 🛠️ Tech Stack
 
 You MUST use the following technologies:
 
-- **Framework**: Next.js (App Router)
+- **Framework**: Next.js (App Router) - Single server for both API and Frontend
 - **Database**: Supabase
-- **Authentication**: Better Auth
+- **Authentication**: Supabase Auth (NOT Better Auth)
 - **UI Components**: shadcn/ui
 - **Styling**: Tailwind CSS
 - **Language**: TypeScript
+- **Testing**: Playwright (for E2E and functional testing)
+- **Linting**: ESLint (must pass `npm run lint` before task completion)
+
+**Critical Architecture Rules**:
+- **Single Server**: API routes and frontend pages run on ONE Next.js server
+- **API Routes**: Use Next.js API routes (`/app/api/**`) - NOT separate backend
+- **Authentication**: All auth handled by Supabase Auth
+- **Forms**: Must match database schema/migration files exactly
+- **Layout**: Responsive design with left sidebar navigation
+- **Testing**: Full E2E testing with Playwright for all functionalities
 
 Additional libraries should be chosen based on project needs but keep dependencies minimal.
 
@@ -97,17 +119,23 @@ Create a detailed task breakdown for each phase:
 
 ### 1.1 [Task Name]
 - **Description**: [What needs to be done]
+- **Prerequisites**: 
+  - [ ] Prerequisite 1 (must be completed first)
+  - [ ] Prerequisite 2 (must be completed first)
+  - [ ] Environment setup complete
+- **Dependencies**: [Other tasks that must be done first, if any]
 - **Acceptance Criteria**: 
   - [ ] Criterion 1
   - [ ] Criterion 2
-- **Files to Create/Modify**: 
-  - `path/to/file.ts`
 - **Estimated Time**: [Time]
 - **Status**: Not Started | In Progress | Completed
+- **Runnable**: No | Partial | Yes (Can the app run after this task?)
 - **Notes**: [Any additional context]
 
 ---
 ```
+
+**Note**: File changes are tracked in log files (`/docs/logs/task-X-X.md`), not in TASKS.md
 
 ### 3. `/docs/PROGRESS.md`
 Track implementation progress:
@@ -125,7 +153,7 @@ Track implementation progress:
 
 ## In Progress 🚧
 - [ ] Phase 2: Authentication System
-  - [x] Task 2.1: Better Auth setup
+  - [x] Task 2.1: Supabase Auth setup
   - [ ] Task 2.2: Login/Register pages (70% complete)
 
 ## Upcoming 📋
@@ -170,9 +198,17 @@ This is your command interface. Always read this file before responding:
 
 **In `/docs/` folder:**
 - `PHASES.md` - Development phase breakdown
-- `TASKS.md` - Detailed task lists with acceptance criteria
+- `TASKS.md` - Detailed task lists with acceptance criteria (no file lists)
 - `PROGRESS.md` - Real-time completion tracking
-- `/extra/` - Additional markdown documentation
+
+**In `/docs/logs/` folder:**
+- `task-1-1.md`, `task-1-2.md`, etc. - Individual task execution logs
+- `phase-1.md`, `phase-2.md`, etc. - Phase completion summaries
+- `phase-1-testing.md`, `phase-2-testing.md` - Phase testing results
+- Contains: files changed, decisions made, issues resolved, test results
+
+**In `/docs/extra/` folder:**
+- Additional markdown documentation (API docs, deployment guides, etc.)
 
 ### 🛠️ Tech Stack
 
@@ -180,13 +216,20 @@ This is your command interface. Always read this file before responding:
 |----------|-----------|
 | **Framework** | Next.js (App Router) |
 | **Database** | Supabase |
-| **Authentication** | Better Auth |
+| **Authentication** | Supabase Auth |
 | **UI Components** | shadcn/ui |
 | **Styling** | Tailwind CSS |
 | **Language** | TypeScript |
+| **Testing** | Playwright |
+| **Linting** | ESLint |
 
 **Additional Libraries:**
 - [List any other dependencies installed]
+
+**Architecture Notes:**
+- Single Next.js server for API + Frontend (no separate backend)
+- API routes in `/app/api/**`
+- Responsive layout with left sidebar
 
 ---
 
@@ -205,16 +248,25 @@ This is your command interface. Always read this file before responding:
 │   ├── PHASES.md
 │   ├── TASKS.md
 │   ├── PROGRESS.md
+│   ├── /logs/                [CREATE - Execution logs]
+│   │   ├── phase-1.md
+│   │   ├── phase-2.md
+│   │   ├── phase-1-testing.md
+│   │   ├── task-1-1.md
+│   │   ├── task-1-2.md
+│   │   └── ... (one file per task/phase)
 │   └── /extra/
 │       ├── API.md
 │       ├── DEPLOYMENT.md
 │       └── ARCHITECTURE.md
 └── /project-name/            [WORK HERE - All code]
-    ├── /app/                 [CREATE/MODIFY - Next.js pages]
+    ├── /app/                 [CREATE/MODIFY - Next.js pages & API]
     ├── /components/          [CREATE/MODIFY - React components]
     ├── /lib/                 [CREATE/MODIFY - Utilities]
     ├── /hooks/               [CREATE/MODIFY - Custom hooks]
     ├── /types/               [CREATE/MODIFY - TypeScript types]
+    ├── /tests/               [CREATE - Playwright tests]
+    ├── /supabase/            [CREATE - Migrations]
     ├── /docs/                [CREATE - Non-.md files]
     ├── /public/              [CREATE - Static assets]
     └── package.json          [MODIFY - Dependencies]
@@ -226,6 +278,7 @@ This is your command interface. Always read this file before responding:
 |--------|--------|---------|
 | `/project-name/` | **WORK HERE** | All application code goes in this folder |
 | `/docs/` | **UPDATE** | Update markdown documentation files |
+| `/docs/logs/` | **CREATE/UPDATE** | Log files for each task and phase execution |
 | `CLAUDE.md` | **UPDATE** | Update after every task completion |
 | `PRD.md` | **READ ONLY** | Reference for requirements |
 | `PROMPT.md` | **READ ONLY** | Reference for workflow |
@@ -236,13 +289,15 @@ This is your command interface. Always read this file before responding:
 
 | Timestamp | Type | File Path | Description |
 |-----------|------|-----------|-------------|
-| [YYYY-MM-DD HH:MM:SS] | Created | `/project-name/lib/auth/config.ts` | Better Auth configuration |
+| [YYYY-MM-DD HH:MM:SS] | Created | `/project-name/lib/supabase/client.ts` | Supabase client configuration |
 | [YYYY-MM-DD HH:MM:SS] | Modified | `/project-name/app/layout.tsx` | Added auth provider |
 | [YYYY-MM-DD HH:MM:SS] | Created | `/docs/extra/API.md` | API documentation |
+| [YYYY-MM-DD HH:MM:SS] | Created | `/docs/logs/task-1-1.md` | Task 1.1 execution log |
 
 **Remember**: 
 - Code files → `/project-name/[path]`
 - Markdown docs → `/docs/` or `/docs/extra/`
+- Execution logs → `/docs/logs/task-X-X.md` or `/docs/logs/phase-X.md`
 - Always use full paths from root directory
 
 ---
@@ -271,6 +326,23 @@ This is your command interface. Always read this file before responding:
 - **Task**: [Task number and name]
 - **Progress**: [X%]
 - **Last Action**: [What was just completed]
+- **Latest Log**: `/docs/logs/task-X-X.md` or `/docs/logs/phase-X.md`
+
+### 🚀 Application Status
+- **Runnable**: ✅ Yes | ⚠️ Partial | ❌ No
+- **Dev Server**: Can run `npm run dev` (API + Frontend together) - Yes | No
+- **Build Status**: Can run `npm run build` - Yes | No | Not Tested
+- **Database Status**: Migrations up to date - Yes | No | N/A
+- **Last Migration**: [Migration name or N/A] - [YYYY-MM-DD HH:MM:SS]
+- **Linting Status**: `npm run lint` - ✅ Passed | ❌ Has Errors
+- **Test Status**: Playwright tests - ✅ All Passing | ⚠️ Some Failing | ❌ Not Run | N/A
+- **Critical Errors**: None | [List errors]
+- **Last Tested**: [YYYY-MM-DD HH:MM:SS]
+
+**Important**: 
+- Always run database migrations (`npm run db:push` or equivalent) before testing if app is runnable and database schema changes were made.
+- Always run `npm run lint` and fix all errors before completing task.
+- Run full Playwright test suite at end of each phase.
 
 ### Working On
 
@@ -284,8 +356,8 @@ This is your command interface. Always read this file before responding:
 **Note**: All code development happens inside `/project-name/` folder
 
 ### ✅ Completed This Session
-- [File/Feature completed] - [Timestamp]
-- [File/Feature completed] - [Timestamp]
+- [File/Feature completed] - [Timestamp] - Log: `/docs/logs/task-X-X.md`
+- [File/Feature completed] - [Timestamp] - Log: `/docs/logs/task-X-X.md`
 
 ---
 
@@ -306,7 +378,7 @@ This is your command interface. Always read this file before responding:
 | `react` | [version] |
 | `typescript` | [version] |
 | `@supabase/supabase-js` | [version] |
-| `better-auth` | [version] |
+| `@supabase/ssr` | [version] |
 | `tailwindcss` | [version] |
 
 ### UI & Styling
@@ -317,6 +389,11 @@ This is your command interface. Always read this file before responding:
 | `class-variance-authority` | [version] |
 | `clsx` | [version] |
 | `tailwind-merge` | [version] |
+
+### Testing
+| Package | Version |
+|---------|---------|
+| `@playwright/test` | [version] |
 
 ### Dev Dependencies
 | Package | Version |
@@ -332,25 +409,26 @@ This is your command interface. Always read this file before responding:
 
 ## 📜 Command History
 
-| Timestamp | Command | Action Taken |
-|-----------|---------|--------------|
-| [YYYY-MM-DD HH:MM:SS] | `next` | Moved to Task 2.1 |
-| [YYYY-MM-DD HH:MM:SS] | `fix login bug` | Fixed authentication redirect |
-| [YYYY-MM-DD HH:MM:SS] | `next` | Completed Phase 1, started Phase 2 |
-| [YYYY-MM-DD HH:MM:SS] | `status` | Provided progress report |
-| [YYYY-MM-DD HH:MM:SS] | `update docs` | Refreshed all documentation |
+| Timestamp | Command | Action Taken | Log File |
+|-----------|---------|--------------|----------|
+| [YYYY-MM-DD HH:MM:SS] | `next` | Moved to Task 2.1 | `/docs/logs/task-1-1.md` |
+| [YYYY-MM-DD HH:MM:SS] | `fix login bug` | Fixed authentication redirect | `/docs/logs/task-2-1.md` (updated) |
+| [YYYY-MM-DD HH:MM:SS] | `next` | Completed Phase 1, started Phase 2 | `/docs/logs/phase-1.md` |
+| [YYYY-MM-DD HH:MM:SS] | `status` | Provided progress report | - |
+| [YYYY-MM-DD HH:MM:SS] | `update docs` | Refreshed all documentation | - |
+| [YYYY-MM-DD HH:MM:SS] | `continue` | Resumed Task 2.2 from log | `/docs/logs/task-2-2.md` |
 
 ---
 
 ## 🐛 Issues & Blockers
 
 ### 🚨 Current Issues
-- [ ] [Issue description if any]
+- [ ] [Issue description if any] - Related to: [Task/Phase] - See: `/docs/logs/task-X-X.md`
 
 ### ✅ Resolved Issues
-| Issue | Solution | Resolved At |
-|-------|----------|-------------|
-| [Issue description] | [How it was fixed] | [YYYY-MM-DD HH:MM:SS] |
+| Issue | Solution | Resolved At | Log File |
+|-------|----------|-------------|----------|
+| [Issue description] | [How it was fixed] | [YYYY-MM-DD HH:MM:SS] | `/docs/logs/task-X-X.md` |
 
 ---
 
@@ -385,6 +463,7 @@ This is your command interface. Always read this file before responding:
 | **Files Created** | [X] |
 | **Files Modified** | [X] |
 | **Dependencies Installed** | [X] |
+| **Tests Passing** | [X/X] |
 ```
 
 ## 🔄 Workflow
@@ -396,242 +475,291 @@ This is your command interface. Always read this file before responding:
 4. Initialize Next.js app inside `/project-name` with proper configuration
 5. Create `/docs` folder at root level (not inside project folder)
 6. Create `/docs/extra` folder for additional documentation
-7. Create `/docs/PHASES.md` with complete phase breakdown
-8. Create `/docs/TASKS.md` with all tasks for Phase 1
-9. Create `/docs/PROGRESS.md` with initial status
-10. Create `/CLAUDE.md` at root level with current status set to Phase 1, Task 1.1
-11. Ask user: "Project structure created. Documentation ready. Type 'next' to begin Phase 1."
+7. Create `/docs/logs` folder for execution logs
+8. Create `/docs/PHASES.md` with complete phase breakdown (include runnable checkpoints)
+9. Create `/docs/TASKS.md` with all tasks for Phase 1 (include prerequisites and runnable status)
+10. Create `/docs/PROGRESS.md` with initial status
+11. Create `/CLAUDE.md` at root level with current status set to Phase 1, Task 1.1
+12. Ask user: "Project structure created. Documentation ready. Type 'next' to begin Phase 1."
 
 ### Ongoing Workflow
+
 **BEFORE EVERY RESPONSE:**
 1. Read `/CLAUDE.md` to check for user commands
-2. Parse the latest command keyword
-3. Execute the appropriate action
-4. Update `/CLAUDE.md` with new status
-5. Update `/docs/PROGRESS.md` if milestones are reached
+2. **Read relevant logs**: If working on a task/phase or fixing bugs:
+   - Read `/docs/logs/task-X-X.md` for task context
+   - Read `/docs/logs/phase-X.md` for phase context
+   - Check for known issues, decisions, and previous attempts
+3. Parse the latest command keyword
+4. Execute the appropriate action
+5. Update `/CLAUDE.md` with new status
+6. Update `/docs/PROGRESS.md` if milestones are reached
+
+**BEFORE STARTING ANY TASK:**
+1. Read the task definition in `/docs/TASKS.md`
+2. Check all **Prerequisites** are completed
+3. Check **Dependencies** (other tasks that must be done first)
+4. Read previous log file `/docs/logs/task-X-X.md` if it exists
+5. Verify environment and setup requirements
+6. Only proceed if all prerequisites are met
+
+**DURING TASK EXECUTION:**
+1. **Check Component/Package Existence**:
+   - Before creating any component, verify if it already exists
+   - Before using any package, check if it's installed in `package.json`
+   - If component/package doesn't exist: create file OR install package first
+   - Document all new installations in log file
+
+2. **Form & API Schema Validation**:
+   - Check database schema file (Supabase migrations)
+   - Ensure form fields match schema exactly (field names, types, constraints)
+   - Ensure API endpoints validate against schema
+   - Use TypeScript types generated from schema
+
+3. **Layout Requirements**:
+   - Implement responsive design (mobile-first approach)
+   - Include left sidebar navigation
+   - Sidebar should be collapsible on mobile
+   - Test responsiveness at different breakpoints
+
+4. **Authentication Implementation**:
+   - Use Supabase Auth for ALL authentication
+   - Implement auth middleware for protected routes
+   - Use Supabase client for auth operations
+   - Never implement custom auth logic
 
 **AFTER COMPLETING ANY TASK, SUBTASK, OR SIGNIFICANT MILESTONE:**
 
 You MUST update documentation in this exact order:
 
-1. **Update `/docs/PROGRESS.md`**:
+1. **Run Linting and Fix Issues**:
+   - Run `npm run lint` to check code quality
+   - If linting errors found: Fix ALL errors
+   - Re-run `npm run lint` until it passes cleanly
+   - Document linting results in log file
+   - **NEVER proceed to next step if linting fails**
+
+2. **Create/Update Log File** `/docs/logs/task-X-X.md`:
+   ```markdown
+   # Task X.X Log - [Task Name]
+   
+   **Completed**: [YYYY-MM-DD HH:MM:SS]
+   **Status**: ✅ Completed | ⚠️ Partial | ❌ Failed
+   
+   ## What Was Done
+   - [Action 1]
+   - [Action 2]
+   
+   ## Files Created/Modified
+   - `/project-name/path/to/file.ts` - [Description of changes]
+   - `/project-name/path/to/another.tsx` - [Description of changes]
+   - `/docs/extra/SOMETHING.md` - [Description]
+   
+   ## Packages Installed
+   - `package-name@version` - [Why it was needed]
+   
+   ## Components Created
+   - `ComponentName` at `/project-name/components/...` - [Purpose]
+   - Used existing: `ExistingComponent` - [Verified exists before use]
+   
+   ## Schema Validation
+   - Form fields validated against: `/project-name/supabase/migrations/XXXX_migration.sql`
+   - API endpoints validated against schema: ✅ Yes | ❌ No
+   - TypeScript types match database: ✅ Yes | ❌ No
+   
+   ## Layout Implementation
+   - Responsive design: ✅ Implemented | ⚠️ Partial | ❌ Not Yet
+   - Left sidebar: ✅ Implemented | ❌ Not Applicable
+   - Mobile tested: ✅ Yes | ❌ No
+   
+   ## Authentication
+   - Uses Supabase Auth: ✅ Yes | ❌ Not Applicable
+   - Auth middleware: ✅ Implemented | ❌ Not Needed
+   
+   ## Database Changes (if applicable)
+   - Schema changes: [Describe changes]
+   - Migrations run: [List migrations]
+   - Seeds added: [List seeds]
+   
+   ## Linting
+   - `npm run lint`: ✅ Passed | ❌ Failed (Fixed: [what was fixed])
+   - Lint errors fixed: [List if any]
+   
+   ## Issues Encountered
+   - [Issue 1 and how it was resolved]
+   
+   ## Decisions Made
+   - [Decision 1 and rationale]
+   
+   ## Testing (will be done at phase completion)
+   - Manual testing: [What was tested manually]
+   - Playwright tests: To be created at phase end
+   
+   ## Application Status
+   - **Runnable**: Yes | No | Partial
+   - **Can Start Dev Server**: Yes | No (single `npm run dev` for API + Frontend)
+   - **Database Ready**: Yes | No | N/A
+   - **Migrations Needed**: Yes | No
+   - **Critical Errors**: None | [List errors]
+   - **Warnings**: None | [List warnings]
+   
+   ## Pre-Run Checklist (if runnable)
+   - [ ] Database migrations completed (`npm run db:push` or similar)
+   - [ ] Environment variables set
+   - [ ] Dependencies installed
+   - [ ] Linting passed
+   - [ ] Dev server tested (`npm run dev` - runs both API and Frontend)
+   
+   ## Notes for Next Task
+   - [Important context for future work]
+   ```
+
+3. **Update `/docs/PROGRESS.md`**:
    - Mark completed tasks with ✅
    - Update percentage progress
    - Add timestamp of completion
    - Note what was accomplished
-   - List files created/modified
+   - Reference log file for details
+   - Update application runnable status
+   - Note linting status
 
-2. **Update `/docs/TASKS.md`**:
+4. **Update `/docs/TASKS.md`**:
    - Change task status to "Completed"
+   - Update "Runnable" field
    - Add completion timestamp
-   - Add implementation notes
+   - Add reference to log file
    - Check off all acceptance criteria
 
-3. **Update `/docs/PHASES.md`** (if phase completed):
+5. **Update `/docs/PHASES.md`** (if phase completed):
    - Mark phase deliverables as complete
    - Update phase status
    - Add completion timestamp
+   - **Proceed to Phase Testing** (see below)
+   - **Create `/docs/logs/phase-X.md`** with phase summary
 
-4. **Update `/CLAUDE.md`**:
+6. **Update `/CLAUDE.md`**:
    - Update "Current Status" section with new phase/task
    - Add entry to "Command History"
    - Update "Completed This Session" list
    - Update "Recently Created/Modified Files" with timestamps
    - Update "Last Updated" timestamp at top
+   - Update "Application Runnable Status"
+   - Reference latest log file
    - Move to next task/phase in workflow
+
+**PHASE COMPLETION - TESTING PROCEDURE:**
+
+When a phase is completed, BEFORE moving to next phase:
+
+1. **Create Playwright Tests**:
+   - Create test file: `/project-name/tests/phase-X.spec.ts`
+   - Write E2E tests for ALL tasks in that phase
+   - Test ALL functionalities (forms, APIs, navigation, auth, etc.)
+   - Ensure tests cover happy paths and error cases
+   - Test in both browser and terminal modes
+
+2. **Run Tests**:
+   - Execute: `npm run test` or `npx playwright test`
+   - Document all test results
+   - If tests fail: Fix issues and re-run until all pass
+   - **NEVER proceed to next phase with failing tests**
+
+3. **Document Testing**:
+   - Create `/docs/logs/phase-X-testing.md` with:
+     - All test cases
+     - Test results (pass/fail)
+     - Issues found and fixed
+     - Screenshots/videos if applicable
+   - Update phase log with testing completion
 
 **CRITICAL RULES**:
 - **NEVER** move to the next task without updating ALL documentation files first
+- **NEVER** complete a task with linting errors
+- **NEVER** complete a phase without full Playwright testing
+- **ALWAYS** verify component/package existence before use
+- **ALWAYS** validate forms/APIs against database schema
+- **ALWAYS** create/update log files for every task completion
+- **ALWAYS** check application runnable status after each task
+- **ALWAYS** run database migrations before testing if app is runnable and database changes were made
+- **ALWAYS** use Supabase Auth for authentication
+- **ALWAYS** implement responsive design with left sidebar
+- **ALWAYS** read relevant logs before starting work
 - **ALWAYS** include timestamps in ISO format (YYYY-MM-DD HH:MM:SS)
 - **ALWAYS** update `/CLAUDE.md` last (it's the source of truth for current state)
+- **ALWAYS** run single `npm run dev` for both API and Frontend
 - This ensures progress is always tracked and recoverable across sessions
 
 ### Command Handling
 
 When user types **"next"**:
+- **First**: Check if current task is complete and all prerequisites for next task are met
+- **Second**: Verify application runnable status
+- **Third**: If database changes were made and app is runnable:
+  - Run database migrations (`npm run db:push`, `npx supabase db push`, or equivalent)
+  - Verify migrations completed successfully
+  - Document migration status in log file
 - Complete current task fully
 - **MANDATORY**: Update all documentation files:
+  - Create/update log file `/docs/logs/task-X-X.md` with complete execution details and file changes
   - Mark task as ✅ completed in `/docs/PROGRESS.md` with timestamp
-  - Update task status to "Completed" in `/docs/TASKS.md`
-  - Update current status in `/CLAUDE.md`
+  - Update task status to "Completed" and runnable status in `/docs/TASKS.md`
+  - Update `/CLAUDE.md` with application status
   - Add completion note to command history
 - Move to next task in sequence
+- **Read prerequisites** of next task from `/docs/TASKS.md`
+- **Read previous logs** if next task relates to previous work
 - Update `/CLAUDE.md` with new current task
 - Start implementing next task
-- Show brief summary: "✅ Completed: [what was done] → Now starting: [next task]"
+- Show brief summary: "✅ Completed: [what was done] | App Status: [Runnable/Not Runnable] | DB Migrated: [Yes/No] → Now starting: [next task]"
 
 When user types **"continue"**:
+- **First**: Check current task from `/CLAUDE.md`
+- **Second**: Check if log file exists for current task (`/docs/logs/task-X-X.md`)
+- **If log exists**:
+  - Read the log file completely
+  - Review what was already done
+  - Review files created/modified so far
+  - Review issues encountered and decisions made
+  - Check current application status from log
+  - Compare log content with actual current state of files
+  - Identify what's completed vs what's remaining
+  - Identify any discrepancies between log and current state
+  - Resume from where it was left off
+  - Update log file with continuation progress
+  - Show: "📖 Read log from task-X-X.md | Already done: [summary] | Continuing: [what's next]"
+- **If no log exists**:
+  - Start task from beginning
+  - Show: "Starting fresh on [task name]"
 - Resume working on current incomplete task
 - Provide context about what's being continued
 
 When user types **"status"**:
 - Read all documentation files
-- Provide comprehensive status report
-- Show current phase, task, and overall progress
-- List what's next
+- Read latest log files from `/docs/logs/`
+- Check current application runnable status
+- Provide comprehensive status report including:
+  - Current phase and task
+  - Overall progress percentage
+  - Application runnable status (Yes/No/Partial)
+  - Recent completions from logs
+  - Known issues from logs
+  - What's next
+  - Prerequisites for next task
 
 When user types **"review"**:
+- Read current task/phase logs from `/docs/logs/`
 - Analyze current implementation
+- Check application runnable status
+- **If app is runnable**:
+  - Verify database migrations are up to date
+  - Check if `npm run dev` works
+  - Test basic functionality
+- Review code quality and architecture
 - Suggest improvements or optimizations
 - Identify potential issues
+- Check consistency between logs and actual code state
 - Don't make changes unless confirmed
 
-When user types **"update docs"**:
-- Refresh `/docs/PROGRESS.md` with latest status and timestamps
-- Update task completion checkboxes in `/docs/TASKS.md`
-- Update phase completion in `/docs/PHASES.md` if applicable
-- Update current status in `/CLAUDE.md`
-- Verify all recently completed items are properly marked
-- Confirm: "📝 All documentation updated successfully"
-
-## 💻 Implementation Guidelines
-
-### Code Quality
-- Write clean, typed TypeScript code
-- Follow Next.js 14+ App Router conventions
-- Use server components by default, client components when needed
-- Implement proper error handling
-- Add loading states and error boundaries
-
-### Database & Auth
-- Design Supabase schema based on PRD requirements
-- Use Better Auth for authentication flows
-- Implement Row Level Security (RLS) policies
-- Handle auth state properly in both server and client components
-
-### UI/UX
-- Use shadcn/ui components consistently
-- Follow Tailwind CSS best practices
-- Ensure responsive design (mobile-first)
-- Implement proper accessibility (ARIA labels, keyboard navigation)
-- Add loading skeletons and optimistic updates
-
-### File Organization
-```
-/root-directory
-  PRD.md                    # Product Requirements Document
-  CLAUDE.md                 # Control file (root level)
-  /docs                     # MARKDOWN FILES ONLY
-    PHASES.md               # Phase breakdown
-    TASKS.md                # Detailed tasks
-    PROGRESS.md             # Progress tracking
-    /extra                  # Additional markdown documentation
-      API.md                # API documentation
-      DEPLOYMENT.md         # Deployment guide
-      ARCHITECTURE.md       # Architecture decisions
-      DATABASE_SCHEMA.md    # Database schema
-      TESTING.md            # Testing strategy
-      ... (any other .md docs)
-  /project-name             # Main application folder
-    /app                    # Next.js app directory
-      /api                  # API routes
-      /(auth)               # Auth-related pages
-      /(dashboard)          # Protected pages
-      /layout.tsx           # Root layout
-      /page.tsx             # Home page
-    /components
-      /ui                   # shadcn/ui components
-      /shared               # Reusable components
-      /features             # Feature-specific components
-    /lib
-      /db                   # Supabase client
-      /auth                 # Better Auth config
-      /utils                # Utility functions
-    /hooks                  # Custom React hooks
-    /types                  # TypeScript types
-    /docs                   # NON-MARKDOWN documentation files
-      /diagrams             # Architecture diagrams, flowcharts (PNG, SVG, etc.)
-      /assets               # Images, icons used in docs
-      /schemas              # JSON schemas, database exports
-      /exports              # Any generated files (CSV, JSON, etc.)
-    /public                 # Static assets
-    package.json
-    next.config.js
-    .env.local
-```
-
-**CRITICAL File Placement Rules**:
-- **Root `/docs`**: ONLY `.md` files (markdown documentation)
-- **Root `/docs/extra`**: Additional `.md` files (API docs, guides, etc.)
-- **Project `/project-name/docs`**: NON-markdown files (images, diagrams, JSON, CSV, etc.)
-- Always update core tracking docs (PHASES, TASKS, PROGRESS) after completing tasks
-- When creating new documentation, check file extension first to determine placement
-
-## 🎯 Success Criteria
-
-- ✅ All features from PRD are implemented
-- ✅ Code is well-typed and documented
-- ✅ UI is polished and responsive
-- ✅ Authentication works seamlessly
-- ✅ Database schema matches requirements
-- ✅ All documentation files are up-to-date
-- ✅ Application is ready for deployment
-
-## 🚀 Deployment Prep
-
-In the final phase, prepare for deployment:
-- Add environment variable documentation
-- Create deployment guide
-- Set up Supabase production database
-- Configure Better Auth for production
-- Optimize build and bundle size
-
----
-
-## 📌 Important Reminders
-
-1. **ALWAYS check `/CLAUDE.md` first** - Look for command keywords before responding. This file is the single source of truth for current state.
-
-2. **Know Your Working Directory**:
-   - 🎯 **ALL APPLICATION CODE** → `/project-name/` folder
-   - 📝 **MARKDOWN DOCS** → `/docs/` or `/docs/extra/`
-   - 🔒 **READ ONLY** → `PRD.md`, `PROMPT.md`
-   - ⚡ **ALWAYS UPDATE** → `CLAUDE.md`, `/docs/PROGRESS.md`, `/docs/TASKS.md`
-
-3. **File Placement Rules - NEVER FORGET**:
-   - Code files → `/project-name/[path]`
-   - `.md` files → Root `/docs` or `/docs/extra`
-   - Non-`.md` docs (images, diagrams, JSON) → `/project-name/docs`
-   - Check file extension before creating any documentation
-
-4. **Update documentation RELIGIOUSLY** - After EVERY completed task, update in this order:
-   - **First**: `/docs/PROGRESS.md` - Mark task complete, update progress %
-   - **Second**: `/docs/TASKS.md` - Change status to "Completed", add timestamp
-   - **Third**: `/docs/PHASES.md` - If phase completed, mark deliverables
-   - **Last**: `/CLAUDE.md` - Update current status, add to history (MOST IMPORTANT)
-
-5. **Never skip documentation updates** - Even for small tasks, update all docs. `/CLAUDE.md` is mandatory every time.
-
-6. **Work incrementally** - Complete one task fully (including doc updates) before moving to next
-
-7. **Communicate clearly** - Explain what you're doing and why
-
-8. **Handle errors gracefully** - Never leave the app in a broken state
-
-9. **Test as you go** - Verify functionality after each implementation
-
-10. **Document as you build** - Create additional docs when needed, always in correct location based on file type
-
-11. **Timestamp everything** - All updates should include timestamps in ISO format (YYYY-MM-DD HH:MM:SS)
-
-12. **Use full paths** - Always reference files with full path from root (e.g., `/project-name/app/page.tsx`)
-
-### Documentation Update Checklist (MANDATORY after every task)
-- [ ] `/docs/PROGRESS.md` updated with completion ✅ and timestamp
-- [ ] `/docs/TASKS.md` task status changed to "Completed" with timestamp
-- [ ] `/docs/PHASES.md` updated if phase completed
-- [ ] `/CLAUDE.md` updated with new current task/phase (DO THIS LAST)
-- [ ] `/CLAUDE.md` command history updated with timestamp
-- [ ] `/CLAUDE.md` "Completed This Session" section updated
-- [ ] `/CLAUDE.md` "Recently Created/Modified Files" updated with full paths and timestamps
-- [ ] `/CLAUDE.md` "Last Updated" timestamp refreshed
-- [ ] If creating new docs: `.md` goes in `/docs/extra`, non-`.md` goes in `/project-name/docs`
-- [ ] All file paths use full paths from root (e.g., `/project-name/...`)
-
-**Remember**: 
-- `/CLAUDE.md` is your memory and state manager. Always update it last so it reflects the true current state.
-- **ALL code work happens inside `/project-name/` folder** - never create code files at root level
-
----
-
-**Ready to start building!** Type "next" when you're ready to begin Phase 1.
+When user types **"fix [issue]"**:
+- **First**: Identify which phase/task the issue relates to
+- **Read relevant logs**: `/docs/logs
