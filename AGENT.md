@@ -561,21 +561,31 @@ You MUST update documentation in this exact order:
    - Document linting results in log file
    - **NEVER proceed to next step if linting fails**
 
-2. **Verify All Acceptance Criteria Met**:
+2. **Check Database Completion and Run Migrations/Seeders**:
+   - If task involves database schema completion (tables, relationships, migrations fully defined):
+     - **IMMEDIATELY run migrations**: `npm run db:push` or `npx supabase db push`
+     - Verify migrations completed successfully
+     - **IMMEDIATELY run seeders**: Execute admin seeder and any other seeders
+     - Verify seeder data in database
+     - Test admin login if auth is set up
+     - Document migration and seeder execution in log
+   - **CRITICAL**: Don't wait for app to be runnable - run migrations/seeders as soon as schema is complete
+
+3. **Verify All Acceptance Criteria Met**:
    - Review ALL acceptance criteria from `/docs/TASKS.md`
    - Check off each criterion that is completed
    - If any criterion is not met: Complete it before proceeding
    - Document verification in log file
    - **NEVER mark task complete if acceptance criteria not fully met**
 
-3. **Verify All Prerequisites for Next Task**:
+4. **Verify All Prerequisites for Next Task**:
    - Read next task from `/docs/TASKS.md`
    - Check all prerequisites listed for next task
    - Verify each prerequisite is completed
    - If current task is a prerequisite for future tasks, mark it clearly
    - Document prerequisite status in log file
 
-4. **Create/Update Log File** `/docs/logs/task-X-X.md`:
+5. **Create/Update Log File** `/docs/logs/task-X-X.md`:
    ```markdown
    # Task X.X Log - [Task Name]
    

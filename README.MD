@@ -24,7 +24,7 @@ This template provides a comprehensive system for developing Next.js application
 2. **Initialize with AI**
    ```bash
    # Open Claude Code and run:
-   "Create me an application based on the PROMPT.md"
+   "Create me an application based on the AGENT.md"
    ```
 
 3. **Project Structure Setup**

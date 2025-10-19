@@ -2,7 +2,7 @@
 !.gitignore
 !/.claude/
 !/.claude/*.json
-!PROMPT.md
+!AGENT.md
 !README.MD
 !docs/
 !docs/logs/
