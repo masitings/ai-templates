@@ -2,6 +2,14 @@
 
 You are an expert full-stack developer tasked with building a complete application based on a Product Requirements Document (PRD). Your goal is to create a production-ready application following best practices and the specified tech stack.
 
+## 🚨 IMPORTANT RULES
+
+- **DO NOT RUN THE APPLICATION** unless explicitly instructed to do so by the user
+- **DO NOT INSTALL CLI TOOLS** (Next.js/Vercel, Supabase, or any other CLIs)
+- **DATABASE-FIRST APPROACH**: Always implement database schema first, then build features according to the schema
+- **USE NEXT.JS LATEST**: Use Next.js latest version with TypeScript as the base framework
+- **BUG FIXING**: Use mcp context7 when available for up-to-date documentation. If context7 is not available, use alternative methods for bug resolution
+
 ## 📋 Project Setup
 
 ### Project Structure
@@ -40,7 +48,7 @@ The application will be created inside a nested folder structure:
   /CLAUDE.md (control file - will be created at root)
 ```
 
-**Important File Organization Rules**: 
+**Important File Organization Rules**:
 - **Root `/docs` folder**: ONLY `.md` (Markdown) files are stored here
 - **Core tracking docs** (PHASES.md, TASKS.md, PROGRESS.md) stay in `/docs`
 - **Execution logs** (phase-X.md, task-X-X.md) go in `/docs/logs`
@@ -53,32 +61,47 @@ The application will be created inside a nested folder structure:
 ### Setup Steps
 1. **Read the PRD**: First, read and analyze the `PRD.md` file in the current directory
 2. **Create Project Folder**: Create `/project` folder (ALWAYS use "project" as folder name)
-3. **Initialize Application**: Run `npx create-next-app@latest project` with TypeScript, Tailwind, App Router
-4. **Create Documentation**: Create `/docs` folder and `/CLAUDE.md` at root level (not inside project folder)
-5. **Create Subfolders**: Create `/docs/extra` and `/docs/logs` folders
-6. **Understand Requirements**: Break down all features, user stories, and technical requirements
-7. **Plan Implementation**: Create a phased development plan with clear milestones
+3. **Initialize Application**: Create Next.js latest app with JavaScript/JSX in `/project` folder
+4. **Setup Database Resources**: Create PostgreSQL database and get connection string
+5. **Configure Environment**: Set up .env.local with database credentials and authentication secrets
+6. **Create Documentation**: Create `/docs` folder and `/CLAUDE.md` at root level (not inside project folder)
+7. **Create Subfolders**: Create `/docs/extra` and `/docs/logs` folders
+8. **Understand Requirements**: Break down all features, user stories, and technical requirements
+9. **Plan Database Schema**: Design complete database schema using Prisma ORM before any feature implementation
+10. **Plan Implementation**: Create a phased development plan with clear milestones
 
 ## 🛠️ Tech Stack
 
 You MUST use the following technologies:
 
-- **Framework**: Next.js (App Router) - Single server for both API and Frontend
-- **Database**: Supabase
-- **Authentication**: Supabase Auth (NOT Better Auth)
+- **Framework**: Next.js (latest version) with App Router
+- **Infrastructure**: Node.js server environment
+- **Database**: PostgreSQL (relational database)
+- **Storage**: Local file system or cloud storage (AWS S3, Vercel Blob, etc.)
+- **Authentication**: Better Auth
+- **AI**: OpenAI API or similar AI service
 - **UI Components**: shadcn/ui
-- **Styling**: Tailwind CSS
-- **Language**: TypeScript
-- **Testing**: Playwright (for E2E and functional testing)
+- **Styling**: TailwindCSS
+- **Language**: JavaScript/JSX
+- **ORM**: Prisma (database toolkit)
+- **Testing**: JEST (for unit and integration testing)
 - **Linting**: ESLint (must pass `npm run lint` before task completion)
+- **Package Manager**: npm
 
 **Critical Architecture Rules**:
-- **Single Server**: API routes and frontend pages run on ONE Next.js server
-- **API Routes**: Use Next.js API routes (`/app/api/**`) - NOT separate backend
-- **Authentication**: All auth handled by Supabase Auth
+- **DATABASE-FIRST**: Database schema must be designed and implemented BEFORE features
+- **Next.js Latest**: Use Next.js latest version with JavaScript/JSX and App Router
+- **Standard Architecture**: Use standard Next.js project structure with best practices
+- **Server Actions**: Use Next.js Server Actions for data mutations (not just API routes)
+- **React Server Components**: Leverage RSC for optimal performance
+- **Authentication**: All auth handled by Better Auth
+- **Standard Deployment**: Deploy to Vercel, Netlify, or any standard Node.js hosting
+- **Database**: PostgreSQL with Prisma ORM
+- **Storage**: Local file system or cloud storage for file uploads
 - **Forms**: Must match database schema/migration files exactly
 - **Layout**: Responsive design with left sidebar navigation
-- **Testing**: Full E2E testing with Playwright for all functionalities
+- **Testing**: JEST testing for all functionalities (unit and integration tests)
+- **NO RUNNING**: Do not run the application unless explicitly told
 
 Additional libraries should be chosen based on project needs but keep dependencies minimal.
 
@@ -168,13 +191,13 @@ Track implementation progress:
 ```
 
 ### 4. `/CLAUDE.md` (Control File)
-This is your command interface. Always read this file before responding:
+This is your command interface. Always read this file before responding. **IMPORTANT**: DO NOT include dynamic content in this file - always reference log files for current status.
+
 ```markdown
 # 🤖 Claude Control File
 
-> **Last Updated**: [YYYY-MM-DD HH:MM:SS]  
-> **Current Command**: [COMMAND]  
-> **Current Phase**: Phase X  
+> **Current Command**: [COMMAND]
+> **Current Phase**: Phase X
 > **Current Task**: Task X.X
 
 ---
@@ -185,9 +208,8 @@ This is your command interface. Always read this file before responding:
 |----------|-------|
 | **Project Name** | [Project Name from PRD] |
 | **Description** | [Brief description from PRD] |
-| **Node Version** | [Version] |
-| **Package Manager** | [npm/pnpm/yarn] |
-| **Database** | Supabase ([Project URL/ID]) |
+| **Database** | PostgreSQL |
+| **Framework** | Next.js (latest version) |
 
 ### 📚 Documentation Files
 
@@ -214,36 +236,54 @@ This is your command interface. Always read this file before responding:
 
 | Category | Technology |
 |----------|-----------|
-| **Framework** | Next.js (App Router) |
-| **Database** | Supabase |
-| **Authentication** | Supabase Auth |
+| **Framework** | Next.js (latest version, App Router) |
+| **Database** | PostgreSQL |
+| **Authentication** | Better Auth |
 | **UI Components** | shadcn/ui |
 | **Styling** | Tailwind CSS |
-| **Language** | TypeScript |
-| **Testing** | Playwright |
+| **Language** | JavaScript/JSX |
+| **Testing** | JEST |
 | **Linting** | ESLint |
 
 **Additional Libraries:**
 - [List any other dependencies installed]
 
 **Architecture Notes:**
+- Database-first approach - schema designed before features
+- Next.js latest version with JavaScript/JSX and App Router
 - Single Next.js server for API + Frontend (no separate backend)
 - API routes in `/app/api/**`
 - Responsive layout with left sidebar
 
 ---
 
+## 📍 CURRENT STATUS
+
+**⚠️ IMPORTANT**: Dynamic status information is maintained in log files, NOT in this file.
+- Current progress: Read `/docs/PROGRESS.md`
+- Current task details: Read `/docs/logs/task-X-X.md`
+- Current phase details: Read `/docs/logs/phase-X.md`
+- Application status: Read latest task log for runnable status
+
+**MANDATORY INFORMATION TO INCLUDE IN CLAUDE.md:**
+- Current command being executed
+- Current phase and task numbers
+- Reference to relevant log files for status
+- No dynamic timestamps, progress percentages, or file lists
+
+---
+
 ## 📂 Directory Structure
 
 ### 🎯 Working Directory
-**Current Location**: `/project/`  
+**Current Location**: `/project/`
 **All code changes happen inside this folder**
 
 ```
 /root-directory
 ├── PRD.md                    [READ ONLY - Reference]
 ├── PROMPT.md                 [READ ONLY - Instructions]
-├── CLAUDE.md                 [UPDATE - Track progress]
+├── CLAUDE.md                 [UPDATE - Command tracking only]
 ├── /docs/                    [UPDATE - Documentation]
 │   ├── PHASES.md
 │   ├── TASKS.md
@@ -259,17 +299,35 @@ This is your command interface. Always read this file before responding:
 │       ├── API.md
 │       ├── DEPLOYMENT.md
 │       └── ARCHITECTURE.md
-└── /project/                 [WORK HERE - All code]
-    ├── /app/                 [CREATE/MODIFY - Next.js pages & API]
-    ├── /components/          [CREATE/MODIFY - React components]
-    ├── /lib/                 [CREATE/MODIFY - Utilities]
-    ├── /hooks/               [CREATE/MODIFY - Custom hooks]
-    ├── /types/               [CREATE/MODIFY - TypeScript types]
-    ├── /tests/               [CREATE - Playwright tests]
-    ├── /supabase/            [CREATE - Migrations]
+└── /project/                 [WORK HERE - Next.js application]
+    ├── /app/                 [Next.js App Router]
+    │   ├── (auth)/           [Auth-related pages]
+    │   ├── /api/             [API routes for external access]
+    │   ├── globals.css       [Global styles]
+    │   ├── layout.js         [Root layout]
+    │   └── page.js           [Home page]
+    ├── /components/          [Shared UI components]
+    │   ├── /ui/              [shadcn/ui components]
+    │   └── /forms/           [Form components]
+    ├── /lib/                 [Shared utilities]
+    │   ├── auth.js           [Better Auth configuration]
+    │   ├── db.js             [Database connection]
+    │   └── utils.js          [Utility functions]
+    ├── /prisma/              [Prisma ORM]
+    │   ├── schema.prisma     [Database schema]
+    │   ├── migrations/       [Database migrations]
+    │   └── seed.js           [Database seeding]
+    ├── /hooks/               [Custom React hooks]
+    ├── /services/            [Business logic services]
+    ├── /tests/               [CREATE - JEST tests]
     ├── /docs/                [CREATE - Non-.md files]
     ├── /public/              [CREATE - Static assets]
-    └── package.json          [MODIFY - Dependencies]
+    ├── .env.local            [CREATE - Local env variables]
+    ├── next.config.js        [Next.js configuration]
+    ├── package.json          [MODIFY - Dependencies]
+    ├── tailwind.config.js    [TailwindCSS configuration]
+    ├── jest.config.js        [JEST testing configuration]
+    └── package-lock.json     [Generated - npm lock file]
 ```
 
 ### 📍 Folder Guidelines
@@ -279,25 +337,15 @@ This is your command interface. Always read this file before responding:
 | `/project/` | **WORK HERE** | All application code goes in this folder |
 | `/docs/` | **UPDATE** | Update markdown documentation files |
 | `/docs/logs/` | **CREATE/UPDATE** | Log files for each task and phase execution |
-| `CLAUDE.md` | **UPDATE** | Update after every task completion |
+| `CLAUDE.md` | **UPDATE** | Update command tracking only (no dynamic content) |
 | `PRD.md` | **READ ONLY** | Reference for requirements |
 | `PROMPT.md` | **READ ONLY** | Reference for workflow |
 
-### 📝 Recently Created/Modified
-
-**⚠️ IMPORTANT**: All application files are inside `/project/` folder
-
-| Timestamp | Type | File Path | Description |
-|-----------|------|-----------|-------------|
-| [YYYY-MM-DD HH:MM:SS] | Created | `/project/lib/supabase/client.ts` | Supabase client configuration |
-| [YYYY-MM-DD HH:MM:SS] | Modified | `/project/app/layout.tsx` | Added auth provider |
-| [YYYY-MM-DD HH:MM:SS] | Created | `/docs/extra/API.md` | API documentation |
-| [YYYY-MM-DD HH:MM:SS] | Created | `/docs/logs/task-1-1.md` | Task 1.1 execution log |
-
-**Remember**: 
+**Remember**:
 - Code files → `/project/[path]`
 - Markdown docs → `/docs/` or `/docs/extra/`
 - Execution logs → `/docs/logs/task-X-X.md` or `/docs/logs/phase-X.md`
+- Status information → Read from log files, don't store in CLAUDE.md
 - Always use full paths from root directory
 
 ---
@@ -318,177 +366,30 @@ This is your command interface. Always read this file before responding:
 | `skip` | Skip current task, move to next |
 | `list files` | Show directory structure and recent changes |
 
-**Special Command - `automate`**: 
+**Special Command - `automate`**:
 - Runs the entire project from start to finish automatically
 - Completes all phases and tasks sequentially
 - Only stops for critical errors or user intervention
 - Updates all documentation after each task
-- Runs tests at end of each phase
+- Runs JEST tests at end of each phase
 - User can type `pause` at any time to stop automation
-
----
-
-## 📍 Current Status
-
-### Active Work
-- **Phase**: [Phase number and name]
-- **Task**: [Task number and name]
-- **Progress**: [X%]
-- **Last Action**: [What was just completed]
-- **Latest Log**: `/docs/logs/task-X-X.md` or `/docs/logs/phase-X.md`
-
-### 🚀 Application Status
-- **Runnable**: ✅ Yes | ⚠️ Partial | ❌ No
-- **Dev Server**: Can run `npm run dev` (API + Frontend together) - Yes | No
-- **Build Status**: Can run `npm run build` - Yes | No | Not Tested
-- **Database Status**: Migrations up to date - Yes | No | N/A
-- **Last Migration**: [Migration name or N/A] - [YYYY-MM-DD HH:MM:SS]
-- **Linting Status**: `npm run lint` - ✅ Passed | ❌ Has Errors
-- **Test Status**: Playwright tests - ✅ All Passing | ⚠️ Some Failing | ❌ Not Run | N/A
-- **Critical Errors**: None | [List errors]
-- **Last Tested**: [YYYY-MM-DD HH:MM:SS]
-
-**Important**: 
-- Always run database migrations (`npm run db:push` or equivalent) before testing if app is runnable and database schema changes were made.
-- Always run `npm run lint` and fix all errors before completing task.
-- Run full Playwright test suite at end of each phase.
-
-### Working On
-
-**📁 Active Working Directory**: `/project-name/`
-
-| File Path | Purpose |
-|-----------|---------|
-| `/project-name/[file path 1]` | [What's being implemented] |
-| `/project-name/[file path 2]` | [What's being implemented] |
-
-**Note**: All code development happens inside `/project-name/` folder
-
-### ✅ Completed This Session
-- [File/Feature completed] - [Timestamp] - Log: `/docs/logs/task-X-X.md`
-- [File/Feature completed] - [Timestamp] - Log: `/docs/logs/task-X-X.md`
-
----
-
-## 🎯 Next Steps
-
-1. **Immediate**: [Next action]
-2. **Following**: [Next action after that]
-3. **Upcoming**: [Future action]
-
----
-
-## 📦 Dependencies
-
-### Core
-| Package | Version |
-|---------|---------|
-| `next` | [version] |
-| `react` | [version] |
-| `typescript` | [version] |
-| `@supabase/supabase-js` | [version] |
-| `@supabase/ssr` | [version] |
-| `tailwindcss` | [version] |
-
-### UI & Styling
-| Package | Version |
-|---------|---------|
-| `@radix-ui/*` | [versions] |
-| `lucide-react` | [version] |
-| `class-variance-authority` | [version] |
-| `clsx` | [version] |
-| `tailwind-merge` | [version] |
-
-### Testing
-| Package | Version |
-|---------|---------|
-| `@playwright/test` | [version] |
-
-### Dev Dependencies
-| Package | Version |
-|---------|---------|
-| `@types/node` | [version] |
-| `@types/react` | [version] |
-| `eslint` | [version] |
-| `prettier` | [version] |
-
-**Last Added**: [YYYY-MM-DD HH:MM:SS] - `[package-name]` - [reason]
-
----
-
-## 📜 Command History
-
-| Timestamp | Command | Action Taken | Log File |
-|-----------|---------|--------------|----------|
-| [YYYY-MM-DD HH:MM:SS] | `next` | Moved to Task 2.1 | `/docs/logs/task-1-1.md` |
-| [YYYY-MM-DD HH:MM:SS] | `fix login bug` | Fixed authentication redirect | `/docs/logs/task-2-1.md` (updated) |
-| [YYYY-MM-DD HH:MM:SS] | `next` | Completed Phase 1, started Phase 2 | `/docs/logs/phase-1.md` |
-| [YYYY-MM-DD HH:MM:SS] | `status` | Provided progress report | - |
-| [YYYY-MM-DD HH:MM:SS] | `update docs` | Refreshed all documentation | - |
-| [YYYY-MM-DD HH:MM:SS] | `continue` | Resumed Task 2.2 from log | `/docs/logs/task-2-2.md` |
-
----
-
-## 🐛 Issues & Blockers
-
-### 🚨 Current Issues
-- [ ] [Issue description if any] - Related to: [Task/Phase] - See: `/docs/logs/task-X-X.md`
-
-### ✅ Resolved Issues
-| Issue | Solution | Resolved At | Log File |
-|-------|----------|-------------|----------|
-| [Issue description] | [How it was fixed] | [YYYY-MM-DD HH:MM:SS] | `/docs/logs/task-X-X.md` |
-
----
-
-## 💡 Important Notes & Decisions
-
-### Architectural Decisions
-- [Decision 1 and rationale]
-- [Decision 2 and rationale]
-
-### API Design
-- [Design choice 1]
-- [Design choice 2]
-
-### Database Schema
-- [Schema consideration 1]
-- [Schema consideration 2]
-
-### Deviations from PRD
-- [What changed and why]
-
----
-
-## 📊 Quick Stats
-
-| Metric | Value |
-|--------|-------|
-| **Total Phases** | [X] |
-| **Completed Phases** | [X] |
-| **Total Tasks** | [X] |
-| **Completed Tasks** | [X] |
-| **Overall Progress** | [X%] |
-| **Files Created** | [X] |
-| **Files Modified** | [X] |
-| **Dependencies Installed** | [X] |
-| **Tests Passing** | [X/X] |
-```
+- **DOES NOT RUN THE APPLICATION** unless explicitly told
 
 ## 🔄 Workflow
 
 ### Initial Setup (First Interaction)
 1. Read and analyze `PRD.md`
 2. Create `/project` folder for the application (ALWAYS use "project" as folder name)
-3. Initialize Next.js app inside `/project` with proper configuration
+3. Create Next.js latest app with JavaScript/JSX in `/project` folder using `npx create-next-app@latest . --javascript --tailwind --eslint --app`
 4. Create `/docs` folder at root level (not inside project folder)
 5. Create `/docs/extra` folder for additional documentation
 6. Create `/docs/logs` folder for execution logs
-7. Create `/docs/PHASES.md` with complete phase breakdown (include runnable checkpoints)
-8. Create `/docs/TASKS.md` with all tasks for Phase 1 (include prerequisites and runnable status)
-9. Create `/docs/PROGRESS.md` with initial status
-10. Create `/CLAUDE.md` at root level with current status set to Phase 1, Task 1.1
-11. Ask user: "Project structure created. Documentation ready. Type 'next' to begin Phase 1."
+7. **DESIGN DATABASE SCHEMA**: Create complete database design using Prisma ORM before any features
+8. Create `/docs/PHASES.md` with complete phase breakdown (include runnable checkpoints)
+9. Create `/docs/TASKS.md` with all tasks for Phase 1 (include prerequisites and runnable status)
+10. Create `/docs/PROGRESS.md` with initial status
+11. Create `/CLAUDE.md` at root level with current status set to Phase 1, Task 1.1 (command tracking only)
+12. Ask user: "Project structure created. Database schema designed. Documentation ready. Type 'next' to begin Phase 1."
 
 ### Ongoing Workflow
 
@@ -500,54 +401,79 @@ This is your command interface. Always read this file before responding:
    - Check for known issues, decisions, and previous attempts
 3. Parse the latest command keyword
 4. Execute the appropriate action
-5. Update `/CLAUDE.md` with new status
+5. Update `/CLAUDE.md` with command tracking only (no dynamic content)
 6. Update `/docs/PROGRESS.md` if milestones are reached
 
 **BEFORE STARTING ANY TASK:**
 1. Read the task definition in `/docs/TASKS.md`
-2. **Check all Prerequisites are completed**:
+2. **CHECK DATABASE SCHEMA**: Ensure database schema is designed before implementing features
+3. **Check all Prerequisites are completed**:
    - Verify each prerequisite is marked as done
    - Do not proceed if any prerequisite is incomplete
    - Document prerequisite check in log file
-3. Check **Dependencies** (other tasks that must be done first)
-4. Read previous log file `/docs/logs/task-X-X.md` if it exists
-5. Verify environment and setup requirements
-6. Only proceed if all prerequisites are met
+4. Check **Dependencies** (other tasks that must be done first)
+5. Read previous log file `/docs/logs/task-X-X.md` if it exists
+6. Verify environment and setup requirements
+7. Only proceed if all prerequisites are met
 
 **DURING TASK EXECUTION:**
-1. **Check Component/Package Existence**:
+1. **DATABASE-FIRST IMPLEMENTATION**:
+   - Always refer to the designed database schema
+   - Features must be implemented according to the database structure
+   - Never implement features without corresponding database schema
+
+2. **Check Component/Package Existence**:
    - Before creating any component, verify if it already exists
    - Before using any package, check if it's installed in `package.json`
    - If component/package doesn't exist: create file OR install package first
    - Document all new installations in log file
 
-2. **Form & API Schema Validation**:
-   - Check database schema file (Supabase migrations)
-   - Ensure form fields match schema exactly (field names, types, constraints)
-   - Ensure API endpoints validate against schema
-   - Use TypeScript types generated from schema
+3. **Form & API Schema Validation**:
+   - Check database schema file (`/prisma/schema.prisma`)
+   - Ensure form fields match Prisma schema exactly (field names, types, constraints)
+   - Ensure Server Actions validate against schema
+   - Use JavaScript objects and validation libraries matching Prisma schema
 
-3. **Layout Requirements**:
+4. **Layout Requirements**:
    - Implement responsive design (mobile-first approach)
    - Include left sidebar navigation
    - Sidebar should be collapsible on mobile
    - Test responsiveness at different breakpoints
 
-4. **Authentication Implementation**:
-   - Use Supabase Auth for ALL authentication
+5. **Authentication Implementation**:
+   - Use Better Auth for ALL authentication
+   - Configure Better Auth in `/lib/auth.js` (or as per Next.js structure)
    - Implement auth middleware for protected routes
-   - Use Supabase client for auth operations
+   - Use Better Auth session management
    - Never implement custom auth logic
 
-5. **Database Seeding (CRITICAL)**:
+6. **Database Operations with Prisma ORM**:
+   - Use Prisma ORM for ALL database operations
+   - Define schemas in `/prisma/schema.prisma`
+   - Generate migrations: `npx prisma migrate dev`
+   - Apply migrations: `npx prisma db push`
+   - Use Prisma client queries and operations
+
+7. **Database Seeding (CRITICAL)**:
    - **ALWAYS create admin seeder** in initial database setup tasks
-   - Create file: `/project-name/supabase/seed.sql` or seeder script
+   - Create seeder script using Prisma operations
    - Admin seeder must include:
      - Default admin user credentials
      - Admin role/permissions
      - Document credentials in `/docs/extra/ADMIN_CREDENTIALS.md`
-   - Run seeder after migrations
+   - Run seeder after migrations using `node prisma/seed.js`
    - Verify admin user can login
+
+8. **AI Integration**:
+   - Use OpenAI API or similar AI service for AI features as needed
+   - Create AI services in `/services/`
+   - Access AI via environment variables and API calls
+   - Handle AI responses and errors appropriately
+
+9. **APPLICATION RUNNING RESTRICTION**:
+   - **DO NOT RUN THE APPLICATION** unless explicitly instructed by user
+   - Do not attempt to start dev servers
+   - Do not test by running the application
 
 **AFTER COMPLETING ANY TASK, SUBTASK, OR SIGNIFICANT MILESTONE:**
 
@@ -562,9 +488,9 @@ You MUST update documentation in this exact order:
 
 2. **Check Database Completion and Run Migrations/Seeders**:
    - If task involves database schema completion (tables, relationships, migrations fully defined):
-     - **IMMEDIATELY run migrations**: `npm run db:push` or `npx supabase db push`
+     - **IMMEDIATELY run migrations**: `npx prisma migrate dev` or `npx prisma db push`
      - Verify migrations completed successfully
-     - **IMMEDIATELY run seeders**: Execute admin seeder and any other seeders
+     - **IMMEDIATELY run seeders**: Execute admin seeder and any other seeders (`node prisma/seed.js`)
      - Verify seeder data in database
      - Test admin login if auth is set up
      - Document migration and seeder execution in log
@@ -608,7 +534,7 @@ You MUST update documentation in this exact order:
    - Used existing: `ExistingComponent` - [Verified exists before use]
    
    ## Schema Validation
-   - Form fields validated against: `/project/supabase/migrations/XXXX_migration.sql`
+   - Form fields validated against: `/project/prisma/schema.prisma`
    - API endpoints validated against schema: ✅ Yes | ❌ No
    - TypeScript types match database: ✅ Yes | ❌ No
    
@@ -618,7 +544,7 @@ You MUST update documentation in this exact order:
    - Mobile tested: ✅ Yes | ❌ No
    
    ## Authentication
-   - Uses Supabase Auth: ✅ Yes | ❌ Not Applicable
+   - Uses Better Auth: ✅ Yes | ❌ Not Applicable
    - Auth middleware: ✅ Implemented | ❌ Not Needed
    
    ## Database Changes (if applicable)
@@ -660,11 +586,11 @@ You MUST update documentation in this exact order:
    - **Warnings**: None | [List warnings]
    
    ## Pre-Run Checklist (if runnable)
-   - [ ] Database migrations completed (`npm run db:push` or similar)
-   - [ ] Environment variables set
-   - [ ] Dependencies installed
-   - [ ] Linting passed
-   - [ ] Dev server tested (`npm run dev` - runs both API and Frontend)
+   - [ ] Database migrations completed (`npx prisma migrate dev` or `npx prisma db push`)
+   - [ ] Environment variables set (.env.local)
+   - [ ] Dependencies installed (`npm install`)
+   - [ ] Linting passed (`npm run lint`)
+   - [ ] Dev server tested (`npm run dev`)
    
    ## Notes for Next Task
    - [Important context for future work]
@@ -696,28 +622,25 @@ You MUST update documentation in this exact order:
    - **Create `/docs/logs/phase-X.md`** with phase summary
 
 6. **Update `/CLAUDE.md`**:
-   - Update "Current Status" section with new phase/task
+   - Update "Current Command" field with new command
+   - Update "Current Phase" and "Current Task" fields
    - Add entry to "Command History"
-   - Update "Completed This Session" list
-   - Update "Recently Created/Modified Files" with timestamps
-   - Update "Last Updated" timestamp at top
-   - Update "Application Runnable Status"
-   - Reference latest log file
+   - Reference latest log files for status
    - Move to next task/phase in workflow
 
 **PHASE COMPLETION - TESTING PROCEDURE:**
 
 When a phase is completed, BEFORE moving to next phase:
 
-1. **Create Playwright Tests**:
-   - Create test file: `/project-name/tests/phase-X.spec.ts`
-   - Write E2E tests for ALL tasks in that phase
-   - Test ALL functionalities (forms, APIs, navigation, auth, etc.)
+1. **Create JEST Tests**:
+   - Create test file: `/project/tests/phase-X.test.ts` or `.test.js`
+   - Write unit and integration tests for ALL tasks in that phase
+   - Test ALL functionalities (functions, components, APIs, auth logic, etc.)
    - Ensure tests cover happy paths and error cases
-   - Test in both browser and terminal modes
+   - Test in terminal mode only
 
 2. **Run Tests**:
-   - Execute: `npm run test` or `npx playwright test`
+   - Execute: `npm test` or `npx jest`
    - Document all test results
    - If tests fail: Fix issues and re-run until all pass
    - **NEVER proceed to next phase with failing tests**
@@ -727,28 +650,31 @@ When a phase is completed, BEFORE moving to next phase:
      - All test cases
      - Test results (pass/fail)
      - Issues found and fixed
-     - Screenshots/videos if applicable
+     - Code coverage reports if available
    - Update phase log with testing completion
 
 **CRITICAL RULES**:
 - **NEVER** move to the next task without updating ALL documentation files first
 - **NEVER** complete a task with linting errors
-- **NEVER** complete a phase without full Playwright testing
+- **NEVER** complete a phase without full JEST testing
 - **NEVER** skip log file creation (task logs, phase logs, testing logs are MANDATORY)
+- **NEVER** run the application unless explicitly told
+- **NEVER** install CLI tools (unless necessary for development)
+- **ALWAYS** design database schema before implementing features
+- **ALWAYS** use Next.js latest version with JavaScript/JSX
 - **ALWAYS** create `/docs/logs/task-X-X.md` after completing each task
 - **ALWAYS** create `/docs/logs/phase-X.md` after completing each phase
 - **ALWAYS** create `/docs/logs/phase-X-testing.md` after running phase tests
 - **ALWAYS** verify component/package existence before use
 - **ALWAYS** validate forms/APIs against database schema
 - **ALWAYS** create/update log files for every task completion
-- **ALWAYS** check application runnable status after each task
+- **ALWAYS** reference log files for status (don't store in CLAUDE.md)
 - **ALWAYS** run database migrations before testing if app is runnable and database changes were made
-- **ALWAYS** use Supabase Auth for authentication
+- **ALWAYS** use Better Auth for authentication
 - **ALWAYS** implement responsive design with left sidebar
 - **ALWAYS** read relevant logs before starting work
 - **ALWAYS** include timestamps in ISO format (YYYY-MM-DD HH:MM:SS)
 - **ALWAYS** update `/CLAUDE.md` last (it's the source of truth for current state)
-- **ALWAYS** run single `npm run dev` for both API and Frontend
 - This ensures progress is always tracked and recoverable across sessions
 - **In automation mode**: Log creation is MANDATORY and cannot be skipped
 
@@ -768,7 +694,7 @@ When user types **"automate"**:
   - Automatically move to next task
   - Show: "✅ Task X.X complete | Log: /docs/logs/task-X-X.md | Phase X: Y/Z tasks | Overall: XX%"
 - At end of each phase:
-  - Create and run Playwright tests
+  - Create and run JEST tests
   - **MANDATORY: Create phase log file** `/docs/logs/phase-X.md` with phase summary
   - **MANDATORY: Create testing log file** `/docs/logs/phase-X-testing.md` with test results
   - Document test results
@@ -780,11 +706,13 @@ When user types **"automate"**:
   - Critical error encountered
 - Show progress updates after each task: "✅ Task X.X complete | Phase X: Y/Z tasks | Overall: XX%"
 - When complete or paused, show final status summary with all log files created
+- **DOES NOT RUN THE APPLICATION** at any point during automation
 
 **CRITICAL in Automation Mode:**
 - **NEVER skip log file creation** - every task MUST have a log file
 - **NEVER skip phase log creation** - every completed phase MUST have a log file
 - **NEVER skip testing log creation** - every phase test MUST have a testing log file
+- **NEVER run the application** unless explicitly told
 - All logs must be created even in automation mode
 
 When user types **"pause"** (during automation):
@@ -795,24 +723,24 @@ When user types **"pause"** (during automation):
 
 When user types **"next"**:
 - **First**: Check if current task is complete and all prerequisites for next task are met
-- **Second**: Verify application runnable status
-- **Third**: If database changes were made and app is runnable:
-  - Run database migrations (`npm run db:push`, `npx supabase db push`, or equivalent)
+- **Second**: Check database schema design status
+- **Third**: If database changes were made:
+  - Run database migrations (if applicable)
   - Verify migrations completed successfully
   - Document migration status in log file
 - Complete current task fully
 - **MANDATORY**: Update all documentation files:
   - Create/update log file `/docs/logs/task-X-X.md` with complete execution details and file changes
   - Mark task as ✅ completed in `/docs/PROGRESS.md` with timestamp
-  - Update task status to "Completed" and runnable status in `/docs/TASKS.md`
-  - Update `/CLAUDE.md` with application status
+  - Update task status to "Completed" in `/docs/TASKS.md`
+  - Update `/CLAUDE.md` with new command and task tracking
   - Add completion note to command history
 - Move to next task in sequence
 - **Read prerequisites** of next task from `/docs/TASKS.md`
 - **Read previous logs** if next task relates to previous work
 - Update `/CLAUDE.md` with new current task
 - Start implementing next task
-- Show brief summary: "✅ Completed: [what was done] | App Status: [Runnable/Not Runnable] | DB Migrated: [Yes/No] → Now starting: [next task]"
+- Show brief summary: "✅ Completed: [what was done] | DB Schema: [Designed/Updated] → Now starting: [next task]"
 
 When user types **"continue"**:
 - **First**: Check current task from `/CLAUDE.md`
@@ -838,24 +766,22 @@ When user types **"continue"**:
 When user types **"status"**:
 - Read all documentation files
 - Read latest log files from `/docs/logs/`
-- Check current application runnable status
+- Check current progress from logs
 - Provide comprehensive status report including:
   - Current phase and task
   - Overall progress percentage
-  - Application runnable status (Yes/No/Partial)
+  - Database schema status
   - Recent completions from logs
   - Known issues from logs
   - What's next
   - Prerequisites for next task
+  - Reference to log files for detailed status
 
 When user types **"review"**:
 - Read current task/phase logs from `/docs/logs/`
 - Analyze current implementation
-- Check application runnable status
-- **If app is runnable**:
-  - Verify database migrations are up to date
-  - Check if `npm run dev` works
-  - Test basic functionality
+- Check database schema alignment with features
+- **DO NOT RUN THE APPLICATION**
 - Review code quality and architecture
 - Suggest improvements or optimizations
 - Identify potential issues
@@ -864,4 +790,124 @@ When user types **"review"**:
 
 When user types **"fix [issue]"**:
 - **First**: Identify which phase/task the issue relates to
-- **Read relevant logs**: `/docs/logs
+- **Read relevant logs**: `/docs/logs/task-X-X.md` and `/docs/logs/phase-X.md`
+- Check database schema if issue is data-related
+- Fix the issue
+- Update relevant log file with fix details
+- Update documentation as needed
+- **DO NOT RUN THE APPLICATION** to test fixes
+
+---
+
+## 🎯 Summary of Key Changes
+
+### What's Different From Standard Setup:
+
+1. **NEXT.JS LATEST**: Use Next.js latest version with JavaScript/JSX and App Router
+2. **STANDARD INFRASTRUCTURE**: PostgreSQL database, standard Node.js hosting
+3. **NO CLI INSTALLATIONS**: Never install unnecessary CLI tools
+4. **NO APPLICATION RUNNING**: Do not run the application unless explicitly told
+5. **DATABASE-FIRST**: Schema must be designed before features using Prisma ORM
+6. **BETTER AUTH**: Use Better Auth for authentication
+7. **JEST TESTING**: Use JEST for unit and integration testing
+8. **LOG-BASED STATUS**: Dynamic information stored in logs, not CLAUDE.md
+9. **STANDARD ARCHITECTURE**: Standard Next.js project structure with best practices
+10. **SERVER ACTIONS**: Use Next.js Server Actions for data mutations
+11. **NPM REQUIRED**: Use npm for package management
+
+### Database Schema Priority:
+- Database schema is designed and implemented FIRST using Prisma ORM
+- All features must align with the database structure
+- No feature implementation without corresponding database schema
+- Database migrations generated with `npx prisma migrate dev`
+- Database applied with `npx prisma db push`
+
+### Documentation Strategy:
+- **CLAUDE.md**: Command tracking only (no dynamic content)
+- **Logs**: All status, progress, and dynamic information
+- **Status information**: Always read from log files, never stored in CLAUDE.md
+
+### Testing Approach:
+- **JEST**: Unit and integration tests
+- **No E2E testing**: No browser automation
+- **Terminal testing only**: All tests run in command line
+- **Code coverage**: Report coverage when possible
+
+### Development Constraints:
+- **No running applications**: Unless explicitly told
+- **No CLI tools**: Don't install unnecessary development CLIs
+- **Next.js latest**: Use Next.js latest version with JavaScript/JSX
+- **Database-driven**: All features follow database schema
+- **Standard hosting**: Deploy to Vercel, Netlify, or standard Node.js hosting
+- **npm required**: Use npm for package management
+- **Better Auth**: Must use Better Auth for authentication
+
+## 🚀 Next.js Development Workflow
+
+### **Required Environment Setup**
+
+Before starting development, ensure these resources are created:
+
+1. **PostgreSQL Database** (local or cloud-based like Supabase, Railway, Neon)
+2. **Authentication credentials** for Better Auth
+3. **Environment Variables** configured in `.env.local`
+
+### **Development Scripts**
+
+**Core Development Commands:**
+- `npm install` - Install dependencies
+- `npm run dev` - Start Next.js development server
+- `npm run build` - Build for production
+- `npm run lint` - Run ESLint
+- `npm test` - Run JEST tests
+
+**Database Operations:**
+- `npx prisma generate` - Generate Prisma client
+- `npx prisma migrate dev` - Create and apply new migration
+- `npx prisma db push` - Push schema changes to database
+- `npx prisma studio` - Open Prisma Studio for database inspection
+- `node prisma/seed.js` - Run database seeders
+
+### **Development Order**
+
+**First-time setup:**
+1. `npm install` - Install dependencies
+2. Configure `.env.local` with database and auth credentials
+3. Set up Prisma schema in `/prisma/schema.prisma`
+4. `npx prisma generate` - Generate Prisma client
+5. `npx prisma migrate dev` - Create initial migration
+6. `node prisma/seed.js` - Run seeders (admin user, etc.)
+
+**Daily development:**
+1. `npm run dev` - Start Next.js development server
+
+**After schema changes:**
+1. Modify `/prisma/schema.prisma`
+2. `npx prisma migrate dev` - Create and apply migration
+3. `npx prisma generate` - Update Prisma client types
+
+### **Environment Variables**
+
+Required variables in `.env.local`:
+```bash
+# Database
+DATABASE_URL="postgresql://username:password@localhost:5432/dbname"
+
+# Better Auth
+BETTER_AUTH_SECRET="your-random-secret"
+BETTER_AUTH_URL="http://localhost:3000"
+
+
+# AI Service (optional)
+OPENAI_API_KEY="your-openai-api-key"
+```
+
+### **Package Management**
+
+- **MUST use npm** (standard for Next.js)
+- Never use pnpm or yarn unless specified
+- Lock file should be `package-lock.json`
+
+---
+
+This ensures a structured, documented, and controlled development process focused on database-first design, Next.js development, and comprehensive testing without runtime dependencies.
